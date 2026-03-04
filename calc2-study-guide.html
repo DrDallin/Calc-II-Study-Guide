@@ -1,0 +1,3433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculus II Study Guide</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#0f1117"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Calc II"/>
+  <link rel="apple-touch-icon" href="icons/icon.svg"/>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #0f1117;
+      background-image: radial-gradient(circle, rgba(129, 140, 248, 0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: #e2e8f0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Views ── */
+    .view { display: none; min-height: 100vh; }
+    .view.active { display: block; }
+
+    /* ── Site header ── */
+    .site-header {
+      background: #13161f;
+      border-bottom: 1px solid #1e2433;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .site-logo {
+      font-size: 0.95rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #818cf8, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: #475569;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-sep { color: #2d3748; }
+
+    .breadcrumb-link {
+      color: #818cf8;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .breadcrumb-link:hover { color: #a5b4fc; text-decoration: underline; }
+
+    .breadcrumb-current { color: #64748b; }
+
+    /* ── Back button ── */
+    .back-btn {
+      background: none;
+      border: 1px solid #2d3748;
+      color: #818cf8;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+      margin-right: 4px;
+    }
+    .back-btn:hover { background: #1e2433; border-color: #818cf8; }
+
+    /* ── Main container ── */
+    .main { max-width: 820px; margin: 0 auto; padding: 52px 24px 100px; }
+
+    /* ── Menu page ── */
+    .menu-hero {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .menu-hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #818cf8 30%, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .menu-hero p { color: #475569; font-size: 0.95rem; }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .module-card {
+      background: #13161f;
+      border: 1px solid #1e2433;
+      border-radius: 14px;
+      padding: 26px 22px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .module-card:hover {
+      border-color: #818cf8;
+      background: #181c2a;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px #818cf81a;
+    }
+
+    .module-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #818cf8;
+      margin-bottom: 10px;
+    }
+
+    .module-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 6px;
+    }
+
+    .module-desc { font-size: 0.78rem; color: #475569; line-height: 1.5; }
+
+    .module-meta {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid #1e2433;
+      font-size: 0.72rem;
+      color: #334155;
+    }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 44px; }
+
+    .page-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #818cf8;
+      margin-bottom: 10px;
+    }
+
+    .page-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+
+    .page-desc { color: #475569; font-size: 0.88rem; }
+
+    /* ── Section list (Module view) ── */
+    .sections-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .section-card {
+      background: #13161f;
+      border: 1px solid #1e2433;
+      border-radius: 12px;
+      padding: 20px 22px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .section-card:hover { border-color: #818cf8; background: #181c2a; }
+
+    .sec-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #818cf8;
+      margin-bottom: 4px;
+    }
+
+    .sec-title { font-size: 0.98rem; font-weight: 600; color: #e2e8f0; }
+
+    .sec-topics {
+      font-size: 0.75rem;
+      color: #475569;
+      margin-top: 4px;
+    }
+
+    .sec-arrow { color: #2d3748; font-size: 1.3rem; flex-shrink: 0; transition: color 0.2s; }
+    .section-card:hover .sec-arrow { color: #818cf8; }
+
+    /* ── Topic blocks (section content) ── */
+    .topic-block { margin-bottom: 48px; }
+
+    .topic-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #1a1f2e;
+    }
+
+    .topic-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      background: #181c2a;
+      border: 1px solid #2d3748;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .topic-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    /* ── Note cards ── */
+    .note-card {
+      background: #13161f;
+      border: 1px solid #1e2433;
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-bottom: 12px;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #cbd5e1;
+    }
+
+    .note-card p { margin-bottom: 10px; }
+    .note-card p:last-child { margin-bottom: 0; }
+    .note-card strong { color: #e2e8f0; font-weight: 600; }
+    .note-card em { color: #a5b4fc; font-style: normal; font-weight: 600; }
+
+    /* ── Formula sheet ── */
+    .formula-sheet {
+      background: #0d1020;
+      border: 1px solid #818cf820;
+      border-left: 3px solid #818cf8;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 22px;
+      margin-bottom: 12px;
+    }
+
+    .formula-sheet-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #818cf8;
+      margin-bottom: 16px;
+    }
+
+    .formula-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #1a1f2e;
+      align-items: center;
+      font-size: 0.87rem;
+    }
+
+    .formula-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .formula-name { color: #64748b; font-size: 0.78rem; }
+    .formula-math { color: #e2e8f0; }
+
+    /* ── Practice problems ── */
+    .problems-section { margin-top: 22px; }
+
+    .problems-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #38bdf8;
+      margin-bottom: 14px;
+    }
+
+    .problem-card {
+      background: #13161f;
+      border: 1px solid #1e2433;
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-bottom: 10px;
+    }
+
+    .problem-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
+
+    .problem-statement {
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .toggle-btn {
+      background: transparent;
+      border: 1px solid #1e2433;
+      border-radius: 6px;
+      color: #475569;
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.5px;
+    }
+
+    .toggle-btn:hover { border-color: #38bdf840; color: #38bdf8; }
+    .toggle-btn.open  { border-color: #38bdf840; color: #38bdf8; background: #38bdf80a; }
+
+    .solution {
+      display: none;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid #1a1f2e;
+      font-size: 0.87rem;
+      color: #94a3b8;
+      line-height: 1.85;
+    }
+
+    .solution.open { display: block; }
+
+    .solution-step { margin-bottom: 8px; }
+
+    .solution-answer {
+      margin-top: 14px;
+      padding: 11px 16px;
+      background: #081610;
+      border: 1px solid #4ade8022;
+      border-left: 3px solid #4ade80;
+      border-radius: 0 8px 8px 0;
+      color: #4ade80;
+      font-size: 0.88rem;
+    }
+
+    /* ── Divider ── */
+    .topic-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #1e2433, transparent);
+      margin: 44px 0;
+    }
+
+    /* ── KaTeX overrides ── */
+    .katex-display { overflow-x: auto; padding: 4px 0; }
+    .katex { font-size: 1em; }
+
+    /* ── Quiz Card (Module 5 list) ── */
+    .quiz-card {
+      background: linear-gradient(135deg, #1a1d2e, #181c2a);
+      border: 1px solid #818cf8;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      margin-top: 8px;
+    }
+    .quiz-card:hover {
+      background: linear-gradient(135deg, #1e2138, #1c2030);
+      box-shadow: 0 0 0 1px #818cf8, 0 4px 20px rgba(129,140,248,0.15);
+    }
+    .quiz-card-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #818cf8;
+      margin-bottom: 3px;
+    }
+    .quiz-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+    .quiz-card-sub {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    .quiz-card-arrow { color: #818cf8; font-size: 1.3rem; }
+
+    /* ── Score History sub-link ── */
+    .history-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      padding: 9px 16px;
+      background: none;
+      border: 1px solid #2d3748;
+      border-radius: 8px;
+      color: #64748b;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      width: 100%;
+      text-align: left;
+    }
+    .history-link:hover { border-color: #818cf8; color: #818cf8; background: #13161f; }
+    .history-link-icon { font-size: 1rem; }
+
+    /* ── Score History View ── */
+    .history-empty {
+      text-align: center;
+      color: #475569;
+      padding: 60px 0;
+      font-size: 1rem;
+    }
+    .history-stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      flex: 1;
+      min-width: 100px;
+      background: #13161f;
+      border: 1px solid #1e2433;
+      border-radius: 10px;
+      padding: 14px 18px;
+      text-align: center;
+    }
+    .stat-value { font-size: 1.6rem; font-weight: 800; color: #818cf8; }
+    .stat-label { font-size: 0.75rem; color: #475569; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .chart-wrap {
+      background: #13161f;
+      border: 1px solid #1e2433;
+      border-radius: 12px;
+      padding: 24px 20px 16px;
+      overflow-x: auto;
+    }
+    .chart-wrap svg { display: block; }
+    .history-clear-wrap { margin-top: 20px; text-align: right; }
+    .history-clear-btn {
+      background: none;
+      border: 1px solid #3d2020;
+      color: #7f4040;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .history-clear-btn:hover { background: #1e1010; border-color: #a05050; color: #e07070; }
+
+    .content-wrap { max-width: 820px; margin: 0 auto; padding: 52px 24px 100px; }
+
+    /* ── Quiz View ── */
+    .quiz-intro {
+      color: #94a3b8;
+      font-size: 0.92rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .quiz-question {
+      background: #13161f;
+      border: 1px solid #1e2433;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 14px;
+    }
+    .quiz-q-header {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #818cf8;
+      margin-bottom: 6px;
+    }
+    .quiz-q-text {
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .quiz-part { margin-bottom: 16px; }
+    .quiz-part:last-child { margin-bottom: 0; }
+    .quiz-part-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: 6px; }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1px solid #1e2433;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      user-select: none;
+    }
+    .quiz-option:hover { border-color: #818cf8; background: #181c2a; }
+    .quiz-option input[type="radio"] { accent-color: #818cf8; flex-shrink: 0; }
+    .quiz-option.correct  { border-color: #4ade80; background: rgba(74,222,128,0.08); color: #e2e8f0; }
+    .quiz-option.incorrect { border-color: #f87171; background: rgba(248,113,113,0.08); color: #94a3b8; }
+    .quiz-option.reveal-correct { border-color: #4ade80; background: rgba(74,222,128,0.05); color: #86efac; }
+    .quiz-submit-wrap { display: flex; justify-content: center; margin: 28px 0 8px; }
+    .quiz-submit-btn {
+      background: linear-gradient(135deg, #818cf8, #38bdf8);
+      color: white;
+      border: none;
+      padding: 12px 40px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .quiz-submit-btn:hover { opacity: 0.88; }
+    .quiz-submit-btn:disabled { opacity: 0.35; cursor: default; }
+    .quiz-score {
+      display: none;
+      background: #13161f;
+      border: 1px solid #1e2433;
+      border-radius: 14px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .quiz-score.show { display: block; }
+    .score-number {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #818cf8, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .score-label { font-size: 0.9rem; color: #64748b; margin-top: 4px; }
+    .score-message { font-size: 1.05rem; font-weight: 600; color: #e2e8f0; margin-top: 12px; }
+    .quiz-retry-btn {
+      margin-top: 16px;
+      background: transparent;
+      border: 1px solid #818cf8;
+      color: #818cf8;
+      padding: 8px 24px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .quiz-retry-btn:hover { background: rgba(129,140,248,0.1); }
+
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     MENU VIEW
+════════════════════════════════════════ -->
+<div class="view active" id="view-menu">
+  <div class="main">
+    <div class="menu-hero">
+      <h1>Calculus II Study Guide</h1>
+      <p>Select a module to begin studying</p>
+    </div>
+
+    <div class="modules-grid">
+      <div class="module-card" onclick="navigate('m5')">
+        <div class="module-tag">Module 5</div>
+        <div class="module-name">Sequences &amp; Series</div>
+        <div class="module-desc">Convergence, limits, and the behavior of infinite sequences and sums.</div>
+        <div class="module-meta">6 sections available</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MODULE 5 VIEW
+════════════════════════════════════════ -->
+<div class="view" id="view-m5">
+  <div class="site-header">
+    <button class="back-btn" onclick="navigate('menu')">← Back</button>
+    <span class="site-logo">Calc II</span>
+    <div class="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('menu')">Modules</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">Module 5</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="page-header">
+      <div class="page-tag">Module 5</div>
+      <div class="page-title">Sequences &amp; Series</div>
+      <div class="page-desc">Convergence, limits, and infinite sums</div>
+    </div>
+
+    <div class="sections-list">
+      <div class="section-card" onclick="navigate('5-1')">
+        <div>
+          <div class="sec-num">5.1</div>
+          <div class="sec-title">Introducing Sequences</div>
+          <div class="sec-topics">Limit of a Sequence &nbsp;·&nbsp; Limit Laws &nbsp;·&nbsp; Squeeze Theorem</div>
+        </div>
+        <div class="sec-arrow">›</div>
+      </div>
+      <div class="section-card" onclick="navigate('5-2')">
+        <div>
+          <div class="sec-num">5.2</div>
+          <div class="sec-title">Infinite Series</div>
+          <div class="sec-topics">Partial Sums &nbsp;·&nbsp; Geometric Series &nbsp;·&nbsp; P-Series &nbsp;·&nbsp; Telescoping &nbsp;·&nbsp; Divergence Test &nbsp;·&nbsp; Re-indexing</div>
+        </div>
+        <div class="sec-arrow">›</div>
+      </div>
+      <div class="section-card" onclick="navigate('5-3')">
+        <div>
+          <div class="sec-num">5.3</div>
+          <div class="sec-title">The Integral Test</div>
+          <div class="sec-topics">The Integral Test &nbsp;·&nbsp; Convergence of P-Series</div>
+        </div>
+        <div class="sec-arrow">›</div>
+      </div>
+      <div class="section-card" onclick="navigate('5-4')">
+        <div>
+          <div class="sec-num">5.4</div>
+          <div class="sec-title">Comparison Tests</div>
+          <div class="sec-topics">Direct Comparison Test &nbsp;·&nbsp; Limit Comparison Test &nbsp;·&nbsp; Factorials</div>
+        </div>
+        <div class="sec-arrow">›</div>
+      </div>
+      <div class="section-card" onclick="navigate('5-5')">
+        <div>
+          <div class="sec-num">5.5</div>
+          <div class="sec-title">Alternating Series &amp; Absolute Convergence</div>
+          <div class="sec-topics">Alternating Series Test &nbsp;·&nbsp; Remainders &nbsp;·&nbsp; Absolute Convergence &nbsp;·&nbsp; Conditional Convergence</div>
+        </div>
+        <div class="sec-arrow">›</div>
+      </div>
+      <div class="section-card" onclick="navigate('5-6')">
+        <div>
+          <div class="sec-num">5.6</div>
+          <div class="sec-title">Ratio &amp; Root Tests</div>
+          <div class="sec-topics">The Ratio Test &nbsp;·&nbsp; The Root Test</div>
+        </div>
+        <div class="sec-arrow">›</div>
+      </div>
+
+      <div class="quiz-card" onclick="navigate('quiz-m5')">
+        <div>
+          <div class="quiz-card-label">Module 5</div>
+          <div class="quiz-card-title">Quiz</div>
+          <div class="quiz-card-sub">10 questions &nbsp;·&nbsp; All sections</div>
+        </div>
+        <div class="quiz-card-arrow">›</div>
+      </div>
+      <button class="history-link" onclick="navigate('quiz-history-m5')">
+        <span class="history-link-icon">📊</span> Score History
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION 5.1 VIEW
+════════════════════════════════════════ -->
+<div class="view" id="view-5-1">
+  <div class="site-header">
+    <button class="back-btn" onclick="navigate('m5')">← Back</button>
+    <span class="site-logo">Calc II</span>
+    <div class="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('menu')">Modules</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('m5')">Module 5</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">5.1 Introducing Sequences</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="page-header">
+      <div class="page-tag">Section 5.1</div>
+      <div class="page-title">Introducing Sequences</div>
+      <div class="page-desc">Defining sequences and studying their limiting behavior as $n \to \infty$</div>
+    </div>
+
+    <!-- ─── TOPIC 1: Limit of a Sequence ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">📐</div>
+        <div class="topic-title">Limit of a Sequence</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>What is a sequence?</strong> A sequence is an ordered list of numbers $a_1, a_2, a_3, \ldots$ written as $\{a_n\}_{n=1}^{\infty}$. Each term $a_n$ is a function of the index $n$.</p>
+        <p><strong>Convergence:</strong> A sequence $\{a_n\}$ <em>converges</em> to $L$ if
+        $$\lim_{n \to \infty} a_n = L$$
+        meaning $a_n$ gets arbitrarily close to $L$ as $n$ grows. If no finite limit exists, the sequence <em>diverges</em>.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Continuous Function Theorem:</strong> If $\displaystyle\lim_{x \to \infty} f(x) = L$ and $a_n = f(n)$, then
+        $$\lim_{n \to \infty} a_n = L$$
+        This lets you treat $n$ as a continuous variable $x$ — and use <strong>L'Hôpital's Rule</strong> on sequences with indeterminate forms like $\frac{\infty}{\infty}$.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Absolute Value Theorem:</strong> If $\displaystyle\lim_{n \to \infty} |a_n| = 0$, then $\displaystyle\lim_{n \to \infty} a_n = 0$.</p>
+        <p>Useful when a sequence has alternating signs but shrinking magnitude.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Common Sequence Limits</div>
+        <div class="formula-row">
+          <div class="formula-name">Geometric (decay)</div>
+          <div class="formula-math">$\lim_{n\to\infty} r^n = 0$ if $|r| < 1$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Geometric (growth)</div>
+          <div class="formula-math">$r^n$ diverges if $|r| > 1$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Euler's number</div>
+          <div class="formula-math">$\displaystyle\lim_{n\to\infty}\!\left(1+\tfrac{1}{n}\right)^n = e$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Log vs. linear</div>
+          <div class="formula-math">$\displaystyle\lim_{n\to\infty}\frac{\ln n}{n} = 0$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Exponential vs. $n!$</div>
+          <div class="formula-math">$\displaystyle\lim_{n\to\infty}\frac{x^n}{n!} = 0$ for any fixed $x$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$n$-th root</div>
+          <div class="formula-math">$\lim_{n\to\infty} n^{1/n} = 1$</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 1</div>
+          <div class="problem-statement">Find $\displaystyle\lim_{n\to\infty} \frac{3n^2 - 2n}{n^2 + 5}$, or state that the sequence diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Divide every term by $n^2$ (the highest power in the denominator):</div>
+            <div class="solution-step">$$\frac{3n^2 - 2n}{n^2 + 5} = \frac{3 - \tfrac{2}{n}}{1 + \tfrac{5}{n^2}}$$</div>
+            <div class="solution-step">As $n \to \infty$, the terms $\tfrac{2}{n} \to 0$ and $\tfrac{5}{n^2} \to 0$.</div>
+            <div class="solution-answer">$$\lim_{n\to\infty} \frac{3n^2 - 2n}{n^2 + 5} = \frac{3-0}{1+0} = 3$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 2</div>
+          <div class="problem-statement">Find $\displaystyle\lim_{n\to\infty}\, n\sin\!\left(\frac{1}{n}\right)$, or state that the sequence diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Rewrite as $\dfrac{\sin(1/n)}{1/n}$ and substitute $t = \tfrac{1}{n}$. As $n\to\infty$, $t\to 0^+$:</div>
+            <div class="solution-step">$$\lim_{t\to 0^+}\frac{\sin t}{t} = 1$$</div>
+            <div class="solution-answer">$$\lim_{n\to\infty}\, n\sin\!\left(\frac{1}{n}\right) = 1$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 3</div>
+          <div class="problem-statement">Does $a_n = (-1)^n$ converge or diverge? Explain.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">The terms alternate: $-1,\, 1,\, -1,\, 1,\, \ldots$ The sequence never settles near a single value.</div>
+            <div class="solution-answer"><strong>Diverges</strong> — the sequence oscillates between $-1$ and $1$ with no limit.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 2: Limit Laws ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">⚖️</div>
+        <div class="topic-title">Limit Laws for Sequences</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Setup:</strong> Suppose $\{a_n\}$ and $\{b_n\}$ are convergent sequences with</p>
+        $$\lim_{n\to\infty} a_n = A \qquad \lim_{n\to\infty} b_n = B$$
+        <p>and $c$ is any constant. Then the limit distributes across all standard arithmetic operations.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Limit Laws</div>
+        <div class="formula-row">
+          <div class="formula-name">Sum / Difference</div>
+          <div class="formula-math">$\lim(a_n \pm b_n) = A \pm B$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Constant multiple</div>
+          <div class="formula-math">$\lim(c \cdot a_n) = c \cdot A$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Product</div>
+          <div class="formula-math">$\lim(a_n \cdot b_n) = A \cdot B$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Quotient</div>
+          <div class="formula-math">$\lim\!\left(\dfrac{a_n}{b_n}\right) = \dfrac{A}{B}$, provided $B \neq 0$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Power</div>
+          <div class="formula-math">$\lim\!\left(a_n^{\,p}\right) = A^p$, provided $p>0$ and $A>0$</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 4</div>
+          <div class="problem-statement">Given $\lim_{n\to\infty} a_n = 4$ and $\lim_{n\to\infty} b_n = -2$, evaluate
+          $$\lim_{n\to\infty}\frac{3a_n^2 - b_n}{a_n + b_n}$$</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Apply limit laws to the numerator and denominator separately.</div>
+            <div class="solution-step"><strong>Numerator:</strong> $\lim(3a_n^2 - b_n) = 3(4)^2 - (-2) = 48 + 2 = 50$</div>
+            <div class="solution-step"><strong>Denominator:</strong> $\lim(a_n + b_n) = 4 + (-2) = 2 \neq 0$ ✓</div>
+            <div class="solution-answer">$$\lim_{n\to\infty}\frac{3a_n^2 - b_n}{a_n + b_n} = \frac{50}{2} = 25$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 5</div>
+          <div class="problem-statement">Find $\displaystyle\lim_{n\to\infty} \frac{5n^3 + 2n}{3n^3 - n^2}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Divide every term by $n^3$:</div>
+            <div class="solution-step">$$\frac{5n^3 + 2n}{3n^3 - n^2} = \frac{5 + \tfrac{2}{n^2}}{3 - \tfrac{1}{n}}$$</div>
+            <div class="solution-step">As $n\to\infty$, both small fractions vanish.</div>
+            <div class="solution-answer">$$\lim_{n\to\infty} \frac{5n^3 + 2n}{3n^3 - n^2} = \frac{5}{3}$$</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 3: Squeeze Theorem ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">🔭</div>
+        <div class="topic-title">Squeeze Theorem for Sequences</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Squeeze Theorem:</strong> Suppose there exists an integer $N$ such that for all $n \geq N$:
+        $$a_n \leq b_n \leq c_n$$
+        If $\displaystyle\lim_{n\to\infty} a_n = \lim_{n\to\infty} c_n = L$, then:
+        $$\lim_{n\to\infty} b_n = L$$</p>
+        <p>The idea: if $b_n$ is always <em>sandwiched</em> between two sequences that share the same limit, it must converge to that same limit.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>When to use it:</strong> The Squeeze Theorem is ideal when $b_n$ has a <em>bounded oscillating factor</em> (like $\sin n$, $\cos n$, or $(-1)^n$) multiplied by a factor that goes to zero.</p>
+        <p>Build your bounds using $-1 \leq \sin n \leq 1$ or $-1 \leq \cos n \leq 1$, then divide by the shrinking factor.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Squeeze Theorem</div>
+        <div class="formula-row">
+          <div class="formula-name">Theorem</div>
+          <div class="formula-math">$a_n \leq b_n \leq c_n$ and $\lim a_n = \lim c_n = L \;\Rightarrow\; \lim b_n = L$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key bound</div>
+          <div class="formula-math">$-|f(n)| \leq f(n)\cdot g(n) \leq |f(n)|$ when $|g(n)| \leq 1$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Abs. value corollary</div>
+          <div class="formula-math">$\lim|a_n| = 0 \;\Rightarrow\; \lim a_n = 0$</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 6</div>
+          <div class="problem-statement">Use the Squeeze Theorem to find $\displaystyle\lim_{n\to\infty} \frac{\cos n}{n}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Since $-1 \leq \cos n \leq 1$ for all $n$, divide through by $n > 0$:</div>
+            <div class="solution-step">$$-\frac{1}{n} \leq \frac{\cos n}{n} \leq \frac{1}{n}$$</div>
+            <div class="solution-step">Both outer sequences satisfy $\displaystyle\lim_{n\to\infty}\left(\pm\tfrac{1}{n}\right) = 0$.</div>
+            <div class="solution-answer">By the Squeeze Theorem: $\displaystyle\lim_{n\to\infty}\frac{\cos n}{n} = 0$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 7</div>
+          <div class="problem-statement">Find $\displaystyle\lim_{n\to\infty} \frac{(-1)^n}{n^2 + 1}$, or state that the sequence diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Consider the absolute value:</div>
+            <div class="solution-step">$$\left|\frac{(-1)^n}{n^2+1}\right| = \frac{1}{n^2+1} \to 0 \text{ as } n\to\infty$$</div>
+            <div class="solution-step">By the Absolute Value Theorem (corollary of Squeeze Theorem):</div>
+            <div class="solution-answer">$$\lim_{n\to\infty}\frac{(-1)^n}{n^2+1} = 0$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 8</div>
+          <div class="problem-statement">Use the Squeeze Theorem to find $\displaystyle\lim_{n\to\infty} \frac{\sin^2 n}{2^n}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Since $0 \leq \sin^2 n \leq 1$, divide by $2^n > 0$:</div>
+            <div class="solution-step">$$0 \leq \frac{\sin^2 n}{2^n} \leq \frac{1}{2^n}$$</div>
+            <div class="solution-step">We know $\displaystyle\lim_{n\to\infty}\frac{1}{2^n} = 0$ since $\left|\tfrac{1}{2}\right| < 1$, and $\lim 0 = 0$.</div>
+            <div class="solution-answer">By the Squeeze Theorem: $\displaystyle\lim_{n\to\infty}\frac{\sin^2 n}{2^n} = 0$</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main -->
+</div><!-- /#view-5-1 -->
+
+<!-- ════════════════════════════════════════
+     SECTION 5.2 VIEW
+════════════════════════════════════════ -->
+<div class="view" id="view-5-2">
+  <div class="site-header">
+    <button class="back-btn" onclick="navigate('m5')">← Back</button>
+    <span class="site-logo">Calc II</span>
+    <div class="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('menu')">Modules</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('m5')">Module 5</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">5.2 Infinite Series</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="page-header">
+      <div class="page-tag">Section 5.2</div>
+      <div class="page-title">Infinite Series</div>
+      <div class="page-desc">Summing infinitely many terms and determining when those sums converge</div>
+    </div>
+
+    <!-- ─── TOPIC 1: Infinite Series & Partial Sums ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">🔢</div>
+        <div class="topic-title">Infinite Series &amp; Partial Sums</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Infinite Series:</strong> Given a sequence $\{a_n\}$, the corresponding infinite series is the formal sum
+        $$\sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \cdots$$
+        Since we cannot literally add infinitely many numbers, convergence is defined through partial sums.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Partial Sums:</strong> The <em>$n$-th partial sum</em> is the sum of the first $n$ terms:
+        $$S_n = \sum_{k=1}^{n} a_k = a_1 + a_2 + \cdots + a_n$$
+        The <em>sequence of partial sums</em> is $\{S_n\} = S_1, S_2, S_3, \ldots$</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Convergence of a Series:</strong> The series $\displaystyle\sum_{n=1}^{\infty} a_n$ <em>converges</em> to $S$ if
+        $$\lim_{n \to \infty} S_n = S$$
+        and we write $\displaystyle\sum_{n=1}^{\infty} a_n = S$. If the limit does not exist or is $\pm\infty$, the series <em>diverges</em>.</p>
+        <p>In other words: <strong>a series converges if and only if its sequence of partial sums converges.</strong></p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Partial Sums</div>
+        <div class="formula-row">
+          <div class="formula-name">$n$-th partial sum</div>
+          <div class="formula-math">$S_n = a_1 + a_2 + \cdots + a_n$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Individual terms</div>
+          <div class="formula-math">$a_n = S_n - S_{n-1}$ for $n \geq 2$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Series converges</div>
+          <div class="formula-math">$\lim_{n\to\infty} S_n = S$ (finite) $\Rightarrow \displaystyle\sum a_n = S$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Series diverges</div>
+          <div class="formula-math">$\lim_{n\to\infty} S_n = \pm\infty$ or DNE</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 1</div>
+          <div class="problem-statement">For $a_n = \dfrac{1}{n(n+1)}$, compute the partial sums $S_1, S_2, S_3, S_4$. Identify the pattern and state the sum of the series.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$S_1 = \dfrac{1}{1 \cdot 2} = \dfrac{1}{2}$</div>
+            <div class="solution-step">$S_2 = \dfrac{1}{2} + \dfrac{1}{2 \cdot 3} = \dfrac{1}{2} + \dfrac{1}{6} = \dfrac{2}{3}$</div>
+            <div class="solution-step">$S_3 = \dfrac{2}{3} + \dfrac{1}{3 \cdot 4} = \dfrac{2}{3} + \dfrac{1}{12} = \dfrac{3}{4}$</div>
+            <div class="solution-step">$S_4 = \dfrac{3}{4} + \dfrac{1}{4 \cdot 5} = \dfrac{3}{4} + \dfrac{1}{20} = \dfrac{4}{5}$</div>
+            <div class="solution-step">Pattern: $S_n = \dfrac{n}{n+1}$, so $\displaystyle\lim_{n\to\infty} S_n = 1$.</div>
+            <div class="solution-answer">$$\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = 1$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 2</div>
+          <div class="problem-statement">Suppose the $n$-th partial sum of a series is $S_n = \dfrac{3n-1}{n+2}$. Find $a_n$ for $n \geq 2$ and determine whether the series converges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">The series converges iff $\lim S_n$ is finite: $\displaystyle\lim_{n\to\infty}\frac{3n-1}{n+2} = 3$. ✓</div>
+            <div class="solution-step">For $n \geq 2$, $a_n = S_n - S_{n-1}$:
+            $$a_n = \frac{3n-1}{n+2} - \frac{3(n-1)-1}{(n-1)+2} = \frac{3n-1}{n+2} - \frac{3n-4}{n+1}$$</div>
+            <div class="solution-step">$$= \frac{(3n-1)(n+1) - (3n-4)(n+2)}{(n+2)(n+1)} = \frac{3n^2+2n-1 - (3n^2+2n-8)}{(n+2)(n+1)} = \frac{7}{(n+2)(n+1)}$$</div>
+            <div class="solution-answer">The series <strong>converges</strong> to $S = 3$, and $a_n = \dfrac{7}{(n+1)(n+2)}$ for $n \geq 2$.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 2: Infinite Geometric Series ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">📊</div>
+        <div class="topic-title">Infinite Geometric Series</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Geometric Series:</strong> A series of the form
+        $$\sum_{n=0}^{\infty} ar^n = a + ar + ar^2 + ar^3 + \cdots$$
+        where $a$ is the first term and $r$ is the <em>common ratio</em>.</p>
+        <p><strong>Partial sum formula:</strong>
+        $$S_n = \frac{a(1 - r^n)}{1 - r}, \quad r \neq 1$$</p>
+        <p>As $n\to\infty$: if $|r| < 1$ then $r^n \to 0$, giving the convergent sum. If $|r| \geq 1$ the series diverges.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Repeating Decimals:</strong> Any repeating decimal can be expressed as an infinite geometric series. The repeating block forms the first term $a$, and the positional shift gives $r$.</p>
+        <p>For example, $0.\overline{37} = 0.373737\ldots = \dfrac{37}{100} + \dfrac{37}{100^2} + \cdots$, a geometric series with $a = \dfrac{37}{100}$, $r = \dfrac{1}{100}$.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Geometric Series</div>
+        <div class="formula-row">
+          <div class="formula-name">Standard form</div>
+          <div class="formula-math">$\displaystyle\sum_{n=0}^{\infty} ar^n$, first term $a$, ratio $r$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Converges ($|r|&lt;1$)</div>
+          <div class="formula-math">$\displaystyle\sum_{n=0}^{\infty} ar^n = \dfrac{a}{1-r}$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Diverges ($|r|\geq 1$)</div>
+          <div class="formula-math">Series has no finite sum</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Partial sum</div>
+          <div class="formula-math">$S_n = \dfrac{a(1-r^n)}{1-r}$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Repeating decimal</div>
+          <div class="formula-math">$0.\overline{d} = \dfrac{d/10}{1 - 1/10} = \dfrac{d}{9}$</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 3</div>
+          <div class="problem-statement">Find the sum $\displaystyle\sum_{n=0}^{\infty} \left(\frac{3}{4}\right)^n$, or state that it diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Geometric series with $a = 1$, $r = \dfrac{3}{4}$. Since $|r| = \dfrac{3}{4} < 1$, it converges.</div>
+            <div class="solution-answer">$$\sum_{n=0}^{\infty} \left(\frac{3}{4}\right)^n = \frac{1}{1 - \frac{3}{4}} = \frac{1}{\frac{1}{4}} = 4$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 4</div>
+          <div class="problem-statement">Find the sum $\displaystyle\sum_{n=0}^{\infty} 5\!\left(-\frac{1}{3}\right)^n$, or state that it diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Geometric series with $a = 5$, $r = -\dfrac{1}{3}$. Since $|r| = \dfrac{1}{3} < 1$, it converges.</div>
+            <div class="solution-answer">$$\sum_{n=0}^{\infty} 5\left(-\frac{1}{3}\right)^n = \frac{5}{1-\left(-\frac{1}{3}\right)} = \frac{5}{\frac{4}{3}} = \frac{15}{4}$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 5</div>
+          <div class="problem-statement">For what values of $x$ does $\displaystyle\sum_{n=0}^{\infty}(2x)^n$ converge? Find the sum as a function of $x$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">This is geometric with $a = 1$, $r = 2x$. Convergence requires $|r| < 1$:</div>
+            <div class="solution-step">$$|2x| < 1 \implies |x| < \frac{1}{2} \implies -\frac{1}{2} < x < \frac{1}{2}$$</div>
+            <div class="solution-answer">Converges for $\left|x\right| < \dfrac{1}{2}$ with sum $\displaystyle\frac{1}{1-2x}$.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 6</div>
+          <div class="problem-statement">Convert $0.\overline{45}$ to a simplified fraction.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Write as a geometric series: $0.\overline{45} = \dfrac{45}{100} + \dfrac{45}{100^2} + \cdots$</div>
+            <div class="solution-step">Here $a = \dfrac{45}{100}$ and $r = \dfrac{1}{100}$.</div>
+            <div class="solution-step">$$\text{Sum} = \frac{45/100}{1 - 1/100} = \frac{45/100}{99/100} = \frac{45}{99}$$</div>
+            <div class="solution-answer">$$0.\overline{45} = \frac{45}{99} = \frac{5}{11}$$</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 3: P-Series & The Harmonic Series ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">📈</div>
+        <div class="topic-title">P-Series &amp; The Harmonic Series</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>P-Series:</strong> A series of the form
+        $$\sum_{n=1}^{\infty} \frac{1}{n^p}$$
+        where $p$ is a positive constant. Whether it converges depends entirely on $p$.</p>
+        <p>The proof of convergence/divergence uses the <em>Integral Test</em> (covered later), comparing the series to $\displaystyle\int_1^{\infty} \frac{1}{x^p}\,dx$.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>The Harmonic Series:</strong> The p-series with $p = 1$,
+        $$\sum_{n=1}^{\infty} \frac{1}{n} = 1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots$$
+        <em>diverges</em> — even though its terms go to zero. This is one of the most important counterexamples in calculus: $\lim a_n = 0$ is <strong>not sufficient</strong> for convergence.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — P-Series</div>
+        <div class="formula-row">
+          <div class="formula-name">General form</div>
+          <div class="formula-math">$\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^p}$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Converges</div>
+          <div class="formula-math">if and only if $p > 1$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Diverges</div>
+          <div class="formula-math">if and only if $p \leq 1$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Harmonic series</div>
+          <div class="formula-math">$\displaystyle\sum_{n=1}^{\infty} \frac{1}{n}$ diverges ($p = 1$)</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 7</div>
+          <div class="problem-statement">Determine whether each series converges or diverges.<br><br>
+          (a) $\displaystyle\sum_{n=1}^{\infty} \frac{1}{\sqrt{n}}$ &nbsp;&nbsp;&nbsp; (b) $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^{3/2}}$ &nbsp;&nbsp;&nbsp; (c) $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^{0.999}}$</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">(a) $\dfrac{1}{\sqrt{n}} = \dfrac{1}{n^{1/2}}$, so $p = \dfrac{1}{2} \leq 1$ → <strong>Diverges</strong></div>
+            <div class="solution-step">(b) $p = \dfrac{3}{2} > 1$ → <strong>Converges</strong></div>
+            <div class="solution-step">(c) $p = 0.999 < 1$ → <strong>Diverges</strong> (barely — p must be strictly greater than 1)</div>
+            <div class="solution-answer">Diverges, Converges, Diverges</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 4: Telescoping Series ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">🎯</div>
+        <div class="topic-title">Telescoping Series</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Telescoping Series:</strong> A series where consecutive terms cancel when the partial sums are written out. Most terms collapse, leaving only finitely many.</p>
+        <p>The key step is expressing $a_n$ as a <em>difference</em> $f(n) - f(n+1)$, often found via <strong>partial fraction decomposition</strong>.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>How to evaluate a telescoping series:</strong></p>
+        <p>1. Write $a_n = f(n) - f(n+1)$ (use partial fractions if needed).</p>
+        <p>2. Expand $S_n$; most terms cancel:
+        $$S_n = \bigl[f(1) - f(2)\bigr] + \bigl[f(2) - f(3)\bigr] + \cdots + \bigl[f(n) - f(n+1)\bigr] = f(1) - f(n+1)$$</p>
+        <p>3. Take the limit: $\displaystyle\sum_{n=1}^{\infty} a_n = \lim_{n\to\infty} S_n = f(1) - \lim_{n\to\infty} f(n+1)$.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Telescoping Series</div>
+        <div class="formula-row">
+          <div class="formula-name">Key form</div>
+          <div class="formula-math">$a_n = f(n) - f(n+1)$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Partial sum</div>
+          <div class="formula-math">$S_n = f(1) - f(n+1)$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Series sum</div>
+          <div class="formula-math">$\displaystyle\sum_{n=1}^{\infty} a_n = f(1) - \lim_{n\to\infty} f(n+1)$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Common setup</div>
+          <div class="formula-math">$\dfrac{1}{n(n+k)} \xrightarrow{\text{PFD}} \dfrac{1}{k}\!\left(\dfrac{1}{n} - \dfrac{1}{n+k}\right)$</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 8</div>
+          <div class="problem-statement">Find the sum $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n(n+1)}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Partial fractions:</strong> $\dfrac{1}{n(n+1)} = \dfrac{1}{n} - \dfrac{1}{n+1}$</div>
+            <div class="solution-step"><strong>Write out $S_n$:</strong>
+            $$S_n = \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \cdots + \left(\frac{1}{n} - \frac{1}{n+1}\right) = 1 - \frac{1}{n+1}$$</div>
+            <div class="solution-step">$\displaystyle\lim_{n\to\infty} S_n = \lim_{n\to\infty}\left(1 - \frac{1}{n+1}\right) = 1$</div>
+            <div class="solution-answer">$$\sum_{n=1}^{\infty} \frac{1}{n(n+1)} = 1$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 9</div>
+          <div class="problem-statement">Find the sum $\displaystyle\sum_{n=1}^{\infty} \frac{1}{(n+2)(n+3)}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Partial fractions:</strong> $\dfrac{1}{(n+2)(n+3)} = \dfrac{1}{n+2} - \dfrac{1}{n+3}$</div>
+            <div class="solution-step">This is $f(n) - f(n+1)$ with $f(n) = \dfrac{1}{n+2}$, so $f(1) = \dfrac{1}{3}$.</div>
+            <div class="solution-step">$S_n = \dfrac{1}{3} - \dfrac{1}{n+3}$, and $\displaystyle\lim_{n\to\infty} S_n = \dfrac{1}{3}$.</div>
+            <div class="solution-answer">$$\sum_{n=1}^{\infty} \frac{1}{(n+2)(n+3)} = \frac{1}{3}$$</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 5: Theorem on Convergence & Test for Divergence ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">⚠️</div>
+        <div class="topic-title">Theorem on Convergence &amp; Test for Divergence</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Theorem on Convergence:</strong> If $\displaystyle\sum_{n=1}^{\infty} a_n$ converges, then
+        $$\lim_{n \to \infty} a_n = 0$$
+        <em>The terms must go to zero — otherwise there's no chance of convergence.</em></p>
+        <p><strong>⚠️ The converse is FALSE.</strong> $\lim a_n = 0$ does <em>not</em> mean the series converges. The Harmonic Series $\sum 1/n$ proves this: its terms go to zero, yet the series diverges.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Test for Divergence (Divergence Test):</strong> If $\displaystyle\lim_{n \to \infty} a_n \neq 0$ or the limit does not exist, then
+        $$\sum_{n=1}^{\infty} a_n \text{ diverges}$$
+        This is the contrapositive of the Theorem on Convergence.</p>
+        <p><strong>If the test shows $\lim a_n = 0$, the test is inconclusive</strong> — you must use another method to determine convergence.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Divergence Test</div>
+        <div class="formula-row">
+          <div class="formula-name">Diverges if</div>
+          <div class="formula-math">$\lim_{n\to\infty} a_n \neq 0$ or DNE</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Inconclusive if</div>
+          <div class="formula-math">$\lim_{n\to\infty} a_n = 0$ (need another test)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key counterexample</div>
+          <div class="formula-math">$\sum \frac{1}{n}$: $\lim \frac{1}{n} = 0$ yet the series diverges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Cannot prove convergence</div>
+          <div class="formula-math">The divergence test can only prove <em>divergence</em></div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 10</div>
+          <div class="problem-statement">Use the Divergence Test to determine whether each series diverges, or state that the test is inconclusive.<br><br>
+          (a) $\displaystyle\sum_{n=1}^{\infty} \frac{n}{2n+1}$ &nbsp;&nbsp;&nbsp; (b) $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^2}$ &nbsp;&nbsp;&nbsp; (c) $\displaystyle\sum_{n=1}^{\infty} \cos(n\pi)$</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">(a) $\displaystyle\lim_{n\to\infty}\frac{n}{2n+1} = \frac{1}{2} \neq 0$ → <strong>Diverges</strong> by the Divergence Test.</div>
+            <div class="solution-step">(b) $\displaystyle\lim_{n\to\infty}\frac{1}{n^2} = 0$ → <strong>Inconclusive.</strong> (The series does converge, but we can't conclude that from this test.)</div>
+            <div class="solution-step">(c) $\cos(n\pi) = (-1)^n$ alternates between $\pm 1$, so the limit does not exist → <strong>Diverges.</strong></div>
+            <div class="solution-answer">Diverges &nbsp;|&nbsp; Inconclusive &nbsp;|&nbsp; Diverges</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 6: Re-indexing ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">🔄</div>
+        <div class="topic-title">Re-indexing</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Re-indexing</strong> means relabeling the index of a series without changing which terms are summed or what the total is. The sum is determined by the terms, not by what we call the index.</p>
+        <p>If we substitute $m = n - k$ (i.e. shift the index by $k$), then when $n = k+1$, $m = 1$, and the general term $a_n$ becomes $a_{m+k}$:
+        $$\sum_{n=k+1}^{\infty} a_n = \sum_{m=1}^{\infty} a_{m+k}$$</p>
+        <p><strong>Why it's useful:</strong> The standard geometric series formula assumes the sum starts at $n = 0$. Re-indexing lets you rewrite any geometric-type series into that standard form.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Re-indexing</div>
+        <div class="formula-row">
+          <div class="formula-name">Shift start to 0</div>
+          <div class="formula-math">$\displaystyle\sum_{n=1}^{\infty} a_n = \sum_{m=0}^{\infty} a_{m+1}$ &nbsp;(let $m = n-1$)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Shift start to 1</div>
+          <div class="formula-math">$\displaystyle\sum_{n=0}^{\infty} a_n = \sum_{m=1}^{\infty} a_{m-1}$ &nbsp;(let $m = n+1$)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">General shift</div>
+          <div class="formula-math">$\displaystyle\sum_{n=j}^{\infty} a_n = \sum_{m=k}^{\infty} a_{m+(j-k)}$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key point</div>
+          <div class="formula-math">The <em>value</em> of the sum never changes — only the label on the index</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 11</div>
+          <div class="problem-statement">Re-index $\displaystyle\sum_{n=3}^{\infty} \frac{1}{(n-2)^2}$ so that the sum starts at $n = 1$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Let $m = n - 2$. When $n = 3$, $m = 1$. As $n \to \infty$, $m \to \infty$. Also $n - 2 = m$, so:</div>
+            <div class="solution-answer">$$\sum_{n=3}^{\infty} \frac{1}{(n-2)^2} = \sum_{m=1}^{\infty} \frac{1}{m^2}$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 12</div>
+          <div class="problem-statement">Write $\displaystyle\sum_{n=3}^{\infty} 2\!\left(\frac{1}{4}\right)^{\!n}$ in standard geometric form $\displaystyle\sum_{m=0}^{\infty} ar^m$ and find its sum.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Let $m = n - 3$. When $n = 3$, $m = 0$; and $n = m + 3$:</div>
+            <div class="solution-step">$$\sum_{n=3}^{\infty} 2\left(\frac{1}{4}\right)^n = \sum_{m=0}^{\infty} 2\left(\frac{1}{4}\right)^{m+3} = \sum_{m=0}^{\infty} \frac{2}{4^3}\left(\frac{1}{4}\right)^m = \sum_{m=0}^{\infty} \frac{1}{32}\left(\frac{1}{4}\right)^m$$</div>
+            <div class="solution-step">Now $a = \dfrac{1}{32}$, $r = \dfrac{1}{4}$, $|r| < 1$ ✓</div>
+            <div class="solution-answer">$$\sum_{n=3}^{\infty} 2\left(\frac{1}{4}\right)^n = \frac{1/32}{1 - 1/4} = \frac{1/32}{3/4} = \frac{1}{24}$$</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main -->
+</div><!-- /#view-5-2 -->
+
+<!-- ════════════════════════════════════════
+     SECTION 5.3 VIEW
+════════════════════════════════════════ -->
+<div class="view" id="view-5-3">
+  <div class="site-header">
+    <button class="back-btn" onclick="navigate('m5')">← Back</button>
+    <span class="site-logo">Calc II</span>
+    <div class="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('menu')">Modules</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('m5')">Module 5</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">5.3 The Integral Test</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="page-header">
+      <div class="page-tag">Section 5.3</div>
+      <div class="page-title">The Integral Test</div>
+      <div class="page-desc">Using improper integrals to determine whether a series converges or diverges</div>
+    </div>
+
+    <!-- ─── TOPIC 1: The Integral Test ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">∫</div>
+        <div class="topic-title">The Integral Test</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>The Integral Test:</strong> Suppose $f$ is a function that satisfies all three conditions on $[1, \infty)$:</p>
+        <p>&nbsp;&nbsp;&nbsp;1. <em>Continuous</em> — no breaks or holes on $[1, \infty)$</p>
+        <p>&nbsp;&nbsp;&nbsp;2. <em>Positive</em> — $f(x) > 0$ for all $x \geq 1$</p>
+        <p>&nbsp;&nbsp;&nbsp;3. <em>Decreasing</em> — $f'(x) < 0$ for all $x \geq 1$</p>
+        <p>If $a_n = f(n)$, then $\displaystyle\sum_{n=1}^{\infty} a_n$ and $\displaystyle\int_1^{\infty} f(x)\,dx$ either <strong>both converge or both diverge</strong>.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Important Warnings:</strong></p>
+        <p>⚠️ The value of the integral is <em>not</em> the value of the series. The test only tells you whether the series converges — not what it converges to.</p>
+        <p>⚠️ All three conditions (continuous, positive, decreasing) must be verified before applying the test. The conditions only need to hold eventually — starting at some $N$, not necessarily $n = 1$.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Strategy for applying the Integral Test:</strong></p>
+        <p><strong>Step 1.</strong> Let $f(x)$ be the function you get by replacing $n$ with $x$ in $a_n$.</p>
+        <p><strong>Step 2.</strong> Verify $f$ is continuous, positive, and decreasing on $[1, \infty)$. For decreasing, compute $f'(x)$ and confirm $f'(x) < 0$.</p>
+        <p><strong>Step 3.</strong> Evaluate $\displaystyle\int_1^{\infty} f(x)\,dx$ as an improper integral.</p>
+        <p><strong>Step 4.</strong> If the integral converges → the series converges. If the integral diverges → the series diverges.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>How to tell if the improper integral converges:</strong> Evaluate it using a limit:
+        $$\int_1^{\infty} f(x)\,dx = \lim_{t \to \infty} \int_1^{t} f(x)\,dx$$
+        After integrating and substituting the bounds, take the limit as $t \to \infty$.</p>
+        <p>• If the limit equals a <em>finite number</em> → the integral <strong>converges</strong> → the series <strong>converges</strong>.</p>
+        <p>• If the limit equals $\pm\infty$ or does not exist → the integral <strong>diverges</strong> → the series <strong>diverges</strong>.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — The Integral Test</div>
+        <div class="formula-row">
+          <div class="formula-name">Conditions</div>
+          <div class="formula-math">$f$ continuous, positive, decreasing on $[1,\infty)$; $\;a_n = f(n)$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Both converge</div>
+          <div class="formula-math">$\displaystyle\int_1^{\infty} f(x)\,dx$ converges $\Leftrightarrow$ $\displaystyle\sum_{n=1}^{\infty} a_n$ converges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Both diverge</div>
+          <div class="formula-math">$\displaystyle\int_1^{\infty} f(x)\,dx$ diverges $\Leftrightarrow$ $\displaystyle\sum_{n=1}^{\infty} a_n$ diverges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key reminder</div>
+          <div class="formula-math">$\displaystyle\int_1^{\infty} f(x)\,dx \neq \sum_{n=1}^{\infty} a_n$ (values differ!)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Check decreasing</div>
+          <div class="formula-math">Compute $f'(x)$ — confirm $f'(x) < 0$ for $x \geq 1$</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 1</div>
+          <div class="problem-statement">Use the Integral Test to determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^2 + 1}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Step 1.</strong> Let $f(x) = \dfrac{1}{x^2+1}$.</div>
+            <div class="solution-step"><strong>Step 2.</strong> Verify conditions on $[1, \infty)$:
+            <br>• Continuous: yes, $x^2+1 \neq 0$ everywhere.
+            <br>• Positive: yes, $f(x) > 0$.
+            <br>• Decreasing: $f'(x) = \dfrac{-2x}{(x^2+1)^2} < 0$ for $x > 0$. ✓</div>
+            <div class="solution-step"><strong>Step 3.</strong> Evaluate the integral:
+            $$\int_1^{\infty} \frac{1}{x^2+1}\,dx = \Big[\arctan x\Big]_1^{\infty} = \frac{\pi}{2} - \frac{\pi}{4} = \frac{\pi}{4}$$</div>
+            <div class="solution-step"><strong>Step 4.</strong> The integral converges (equals $\pi/4$).</div>
+            <div class="solution-answer">$\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^2+1}$ <strong>converges</strong> by the Integral Test. (Note: its sum is not $\pi/4$.)</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 2</div>
+          <div class="problem-statement">Use the Integral Test to determine whether $\displaystyle\sum_{n=2}^{\infty} \frac{1}{n \ln n}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Step 1.</strong> Let $f(x) = \dfrac{1}{x \ln x}$. (Note: the sum starts at $n=2$ since $\ln 1 = 0$.)</div>
+            <div class="solution-step"><strong>Step 2.</strong> On $[2, \infty)$: $f$ is continuous, positive, and decreasing (both $x$ and $\ln x$ are increasing, so their product grows → $f$ decreases). ✓</div>
+            <div class="solution-step"><strong>Step 3.</strong> Evaluate using $u = \ln x$, $du = \frac{1}{x}\,dx$:
+            $$\int_2^{\infty} \frac{1}{x \ln x}\,dx = \int_{\ln 2}^{\infty} \frac{1}{u}\,du = \Big[\ln u\Big]_{\ln 2}^{\infty} = \infty$$</div>
+            <div class="solution-answer">$\displaystyle\sum_{n=2}^{\infty} \frac{1}{n \ln n}$ <strong>diverges</strong> by the Integral Test.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 3</div>
+          <div class="problem-statement">Use the Integral Test to determine whether $\displaystyle\sum_{n=1}^{\infty} n\,e^{-n^2}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Step 1.</strong> Let $f(x) = x\,e^{-x^2}$.</div>
+            <div class="solution-step"><strong>Step 2.</strong> On $[1, \infty)$: continuous ✓, positive ✓. For decreasing: $f'(x) = e^{-x^2}(1 - 2x^2) < 0$ for $x \geq 1$. ✓</div>
+            <div class="solution-step"><strong>Step 3.</strong> Use $u = x^2$, $du = 2x\,dx$:
+            $$\int_1^{\infty} x\,e^{-x^2}\,dx = \frac{1}{2}\int_1^{\infty} e^{-u}\,du = \frac{1}{2}\Big[-e^{-u}\Big]_1^{\infty} = \frac{1}{2}(0 + e^{-1}) = \frac{1}{2e}$$</div>
+            <div class="solution-answer">$\displaystyle\sum_{n=1}^{\infty} n\,e^{-n^2}$ <strong>converges</strong> by the Integral Test.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 4</div>
+          <div class="problem-statement">Use the Integral Test to determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{\ln n}{n}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Step 1.</strong> Let $f(x) = \dfrac{\ln x}{x}$.</div>
+            <div class="solution-step"><strong>Step 2.</strong> On $[1,\infty)$: continuous ✓, positive for $x > 1$ ✓. For decreasing: $f'(x) = \dfrac{1 - \ln x}{x^2} < 0$ when $\ln x > 1$, i.e. $x > e \approx 2.7$. So $f$ is eventually decreasing. ✓</div>
+            <div class="solution-step"><strong>Step 3.</strong> Use $u = \ln x$, $du = \frac{1}{x}\,dx$:
+            $$\int_1^{\infty} \frac{\ln x}{x}\,dx = \int_0^{\infty} u\,du = \left[\frac{u^2}{2}\right]_0^{\infty} = \infty$$</div>
+            <div class="solution-answer">$\displaystyle\sum_{n=1}^{\infty} \frac{\ln n}{n}$ <strong>diverges</strong> by the Integral Test.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 2: Convergence of P-Series ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">📐</div>
+        <div class="topic-title">Convergence of P-Series</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>P-Series:</strong> $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^p}$ where $p > 0$ is a constant.</p>
+        <p>We introduced p-series in 5.2 and stated the result. Here we <em>prove</em> it using the Integral Test with $f(x) = x^{-p}$, which is continuous, positive, and decreasing on $[1, \infty)$ for all $p > 0$.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Proof via the Integral Test:</strong></p>
+        <p><strong>Case 1 — $p = 1$ (Harmonic Series):</strong>
+        $$\int_1^{\infty} \frac{1}{x}\,dx = \Big[\ln x\Big]_1^{\infty} = \infty \quad \Rightarrow \quad \sum_{n=1}^{\infty}\frac{1}{n} \text{ diverges}$$</p>
+        <p><strong>Case 2 — $p \neq 1$:</strong>
+        $$\int_1^{\infty} x^{-p}\,dx = \left[\frac{x^{1-p}}{1-p}\right]_1^{\infty}$$
+        If $p > 1$: the exponent $1-p < 0$, so $x^{1-p} \to 0$ as $x\to\infty$:
+        $$= 0 - \frac{1}{1-p} = \frac{1}{p-1} \quad \Rightarrow \quad \text{converges}$$
+        If $p < 1$: the exponent $1-p > 0$, so $x^{1-p} \to \infty$:
+        $$\Rightarrow \quad \text{integral diverges} \quad \Rightarrow \quad \text{series diverges}$$</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — P-Series (with proof)</div>
+        <div class="formula-row">
+          <div class="formula-name">General form</div>
+          <div class="formula-math">$\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^p}$, $\;p > 0$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Converges</div>
+          <div class="formula-math">$p > 1$ &nbsp;→&nbsp; integral $= \dfrac{1}{p-1}$ (finite)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Diverges ($p=1$)</div>
+          <div class="formula-math">$\displaystyle\sum \frac{1}{n}$ — integral $= \ln x\big|_1^\infty = \infty$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Diverges ($p &lt; 1$)</div>
+          <div class="formula-math">$x^{1-p} \to \infty$ since exponent $1-p > 0$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key integral</div>
+          <div class="formula-math">$\displaystyle\int_1^{\infty} x^{-p}\,dx = \frac{1}{p-1}$ when $p > 1$</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 5</div>
+          <div class="problem-statement">Use the Integral Test to prove that $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^3}$ converges, and evaluate the corresponding integral.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$f(x) = x^{-3}$ is continuous, positive, and decreasing on $[1,\infty)$. ✓</div>
+            <div class="solution-step">$$\int_1^{\infty} x^{-3}\,dx = \left[\frac{x^{-2}}{-2}\right]_1^{\infty} = 0 - \left(-\frac{1}{2}\right) = \frac{1}{2}$$</div>
+            <div class="solution-answer">The integral converges, so $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^3}$ <strong>converges</strong>. (The sum $\approx 1.202$, not $\frac{1}{2}$.)</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 6</div>
+          <div class="problem-statement">Determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^{2/3}}$ converges or diverges. Justify using the Integral Test.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">This is a p-series with $p = \dfrac{2}{3} < 1$. Verify with the Integral Test:</div>
+            <div class="solution-step">$$\int_1^{\infty} x^{-2/3}\,dx = \left[\frac{x^{1/3}}{1/3}\right]_1^{\infty} = \left[3x^{1/3}\right]_1^{\infty} = \infty$$</div>
+            <div class="solution-answer">The integral diverges, so $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^{2/3}}$ <strong>diverges</strong>.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 7</div>
+          <div class="problem-statement">For what values of $p$ does $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n(\ln n)^p}$ converge? (Hint: let $u = \ln x$.)</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Let $f(x) = \dfrac{1}{x(\ln x)^p}$, which is continuous, positive, and decreasing on $[2, \infty)$.</div>
+            <div class="solution-step">Evaluate with $u = \ln x$, $du = \frac{1}{x}\,dx$:
+            $$\int_2^{\infty} \frac{1}{x(\ln x)^p}\,dx = \int_{\ln 2}^{\infty} u^{-p}\,du$$</div>
+            <div class="solution-step">This is itself a p-series-type integral. It converges iff $p > 1$ (same logic as the p-series proof).</div>
+            <div class="solution-answer">$\displaystyle\sum_{n=2}^{\infty} \frac{1}{n(\ln n)^p}$ <strong>converges if and only if $p > 1$</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main -->
+</div><!-- /#view-5-3 -->
+
+<!-- ════════════════════════════════════════
+     SECTION 5.4 VIEW
+════════════════════════════════════════ -->
+<div class="view" id="view-5-4">
+  <div class="site-header">
+    <button class="back-btn" onclick="navigate('m5')">← Back</button>
+    <span class="site-logo">Calc II</span>
+    <div class="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('menu')">Modules</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('m5')">Module 5</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">5.4 Comparison Tests</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="page-header">
+      <div class="page-tag">Section 5.4</div>
+      <div class="page-title">Comparison Tests</div>
+      <div class="page-desc">Determining convergence by comparing a series to one whose behavior is already known</div>
+    </div>
+
+    <!-- ─── TOPIC 1: Direct Comparison Test ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">⚖️</div>
+        <div class="topic-title">Direct Comparison Test (DCT)</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Direct Comparison Test:</strong> Suppose $0 \leq a_n \leq b_n$ for all $n \geq N$. Then:</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $\displaystyle\sum b_n$ <strong>converges</strong>, then $\displaystyle\sum a_n$ <strong>converges</strong>.</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $\displaystyle\sum a_n$ <strong>diverges</strong>, then $\displaystyle\sum b_n$ <strong>diverges</strong>.</p>
+        <p>The intuition: if a smaller series diverges, the larger one must too. If a larger series converges, the smaller one must be bounded and converges as well.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Strategy:</strong> Choose a comparison series — usually a <em>p-series</em> $\sum 1/n^p$ or a <em>geometric series</em> $\sum ar^n$.</p>
+        <p>• To prove <strong>convergence</strong>: find a larger series $\sum b_n$ that converges, and show $a_n \leq b_n$.</p>
+        <p>• To prove <strong>divergence</strong>: find a smaller series $\sum b_n$ that diverges, and show $a_n \geq b_n$.</p>
+        <p>⚠️ Watch the direction! Showing $a_n \leq$ (something that <em>diverges</em>) tells you nothing. Showing $a_n \geq$ (something that <em>converges</em>) also tells you nothing.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>A helpful way to remember the direction:</strong></p>
+        <p>🔺 <strong>"Bigger than big" diverges</strong> — if your series is <em>bigger</em> than a series that already diverges, yours diverges too. You're even larger than something that was already too large to converge.</p>
+        <p>🔻 <strong>"Smaller than small" converges</strong> — if your series is <em>smaller</em> than a series that already converges, yours converges too. You're even smaller than something that was already small enough to converge.</p>
+        <p>The two useless directions: <em>bigger than small</em> (inconclusive) and <em>smaller than big</em> (inconclusive). You need the comparison to work <em>against</em> the known series — not with it.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Direct Comparison Test</div>
+        <div class="formula-row">
+          <div class="formula-name">Setup</div>
+          <div class="formula-math">$0 \leq a_n \leq b_n$ for all $n \geq N$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Convergence</div>
+          <div class="formula-math">$\sum b_n$ converges $\Rightarrow$ $\sum a_n$ converges &nbsp;($a_n$ is smaller)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Divergence</div>
+          <div class="formula-math">$\sum a_n$ diverges $\Rightarrow$ $\sum b_n$ diverges &nbsp;($b_n$ is larger)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Useful tip</div>
+          <div class="formula-math">Dropping terms from denominator makes fraction <em>larger</em>; adding terms makes it <em>smaller</em></div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 1</div>
+          <div class="problem-statement">Use the DCT to determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^2 + n}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Since $n^2 + n > n^2$, taking reciprocals reverses the inequality:
+            $$0 < \frac{1}{n^2+n} < \frac{1}{n^2}$$</div>
+            <div class="solution-step">$\displaystyle\sum \frac{1}{n^2}$ is a convergent p-series ($p = 2 > 1$).</div>
+            <div class="solution-answer">By the DCT, $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^2+n}$ <strong>converges</strong>.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 2</div>
+          <div class="problem-statement">Use the DCT to determine whether $\displaystyle\sum_{n=2}^{\infty} \frac{1}{\sqrt{n}-1}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Since $\sqrt{n} - 1 < \sqrt{n}$, taking reciprocals reverses the inequality:
+            $$\frac{1}{\sqrt{n}-1} > \frac{1}{\sqrt{n}} = \frac{1}{n^{1/2}}$$</div>
+            <div class="solution-step">$\displaystyle\sum \frac{1}{n^{1/2}}$ is a divergent p-series ($p = \frac{1}{2} \leq 1$). Since $a_n$ is larger than a divergent series:</div>
+            <div class="solution-answer">By the DCT, $\displaystyle\sum_{n=2}^{\infty} \frac{1}{\sqrt{n}-1}$ <strong>diverges</strong>.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 3</div>
+          <div class="problem-statement">Use the DCT to determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{\sin^2 n}{n^2}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Since $0 \leq \sin^2 n \leq 1$ for all $n$:
+            $$0 \leq \frac{\sin^2 n}{n^2} \leq \frac{1}{n^2}$$</div>
+            <div class="solution-step">$\displaystyle\sum \frac{1}{n^2}$ converges (p-series, $p = 2$).</div>
+            <div class="solution-answer">By the DCT, $\displaystyle\sum_{n=1}^{\infty} \frac{\sin^2 n}{n^2}$ <strong>converges</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 2: Limit Comparison Test ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">🔬</div>
+        <div class="topic-title">Limit Comparison Test (LCT)</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Limit Comparison Test:</strong> Suppose $a_n > 0$ and $b_n > 0$ for all $n \geq N$, and let
+        $$L = \lim_{n \to \infty} \frac{a_n}{b_n}$$</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $0 < L < \infty$ (finite and positive): $\sum a_n$ and $\sum b_n$ <strong>both converge or both diverge</strong>.</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $L = 0$: if $\sum b_n$ converges, then $\sum a_n$ converges.</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $L = \infty$: if $\sum b_n$ diverges, then $\sum a_n$ diverges.</p>
+        <p>The most useful and common case is $0 < L < \infty$ — the series share the same convergence behavior.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Strategy — choosing $b_n$:</strong> Keep only the <em>dominant terms</em> of the numerator and denominator of $a_n$ and simplify. This dominant-term fraction is your $b_n$.</p>
+        <p>For example, if $a_n = \dfrac{3n^2 + 5}{n^4 - 2n}$, the dominant terms give $\dfrac{3n^2}{n^4} = \dfrac{3}{n^2}$, so choose $b_n = \dfrac{1}{n^2}$.</p>
+        <p>The LCT is especially useful when the DCT is difficult to set up — when you can't easily find a clean inequality between $a_n$ and a known series.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Limit Comparison Test</div>
+        <div class="formula-row">
+          <div class="formula-name">Setup</div>
+          <div class="formula-math">$a_n > 0$, $b_n > 0$; compute $L = \lim_{n\to\infty} \dfrac{a_n}{b_n}$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$0 < L < \infty$</div>
+          <div class="formula-math">Both series converge or both diverge (most common case)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$L = 0$</div>
+          <div class="formula-math">$\sum b_n$ converges $\Rightarrow$ $\sum a_n$ converges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$L = \infty$</div>
+          <div class="formula-math">$\sum b_n$ diverges $\Rightarrow$ $\sum a_n$ diverges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Choose $b_n$</div>
+          <div class="formula-math">Keep dominant terms of numerator &amp; denominator of $a_n$</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 4</div>
+          <div class="problem-statement">Use the LCT to determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{3n^2 + 2}{n^4 - 5}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Choose $b_n$:</strong> Dominant terms give $\dfrac{3n^2}{n^4} = \dfrac{3}{n^2}$, so let $b_n = \dfrac{1}{n^2}$.</div>
+            <div class="solution-step"><strong>Compute $L$:</strong>
+            $$L = \lim_{n\to\infty}\frac{a_n}{b_n} = \lim_{n\to\infty}\frac{3n^2+2}{n^4-5} \cdot n^2 = \lim_{n\to\infty}\frac{3n^4+2n^2}{n^4-5} = 3$$</div>
+            <div class="solution-step">$0 < L = 3 < \infty$ ✓, and $\displaystyle\sum \frac{1}{n^2}$ converges (p-series, $p=2$).</div>
+            <div class="solution-answer">By the LCT, $\displaystyle\sum_{n=1}^{\infty} \frac{3n^2+2}{n^4-5}$ <strong>converges</strong>.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 5</div>
+          <div class="problem-statement">Use the LCT to determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{1}{\sqrt{n^2+1}}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Choose $b_n$:</strong> For large $n$, $\sqrt{n^2+1} \approx \sqrt{n^2} = n$, so let $b_n = \dfrac{1}{n}$.</div>
+            <div class="solution-step"><strong>Compute $L$:</strong>
+            $$L = \lim_{n\to\infty}\frac{1/\sqrt{n^2+1}}{1/n} = \lim_{n\to\infty}\frac{n}{\sqrt{n^2+1}} = \lim_{n\to\infty}\frac{1}{\sqrt{1+1/n^2}} = 1$$</div>
+            <div class="solution-step">$0 < L = 1 < \infty$ ✓, and $\displaystyle\sum \frac{1}{n}$ diverges (harmonic series).</div>
+            <div class="solution-answer">By the LCT, $\displaystyle\sum_{n=1}^{\infty} \frac{1}{\sqrt{n^2+1}}$ <strong>diverges</strong>.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 6</div>
+          <div class="problem-statement">Use the LCT to determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{n^2+1}{n^3+n+1}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Choose $b_n$:</strong> Dominant terms give $\dfrac{n^2}{n^3} = \dfrac{1}{n}$, so let $b_n = \dfrac{1}{n}$.</div>
+            <div class="solution-step"><strong>Compute $L$:</strong>
+            $$L = \lim_{n\to\infty}\frac{n^2+1}{n^3+n+1} \cdot n = \lim_{n\to\infty}\frac{n^3+n}{n^3+n+1} = 1$$</div>
+            <div class="solution-step">$0 < L = 1 < \infty$ ✓, and $\displaystyle\sum \frac{1}{n}$ diverges.</div>
+            <div class="solution-answer">By the LCT, $\displaystyle\sum_{n=1}^{\infty} \frac{n^2+1}{n^3+n+1}$ <strong>diverges</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 3: Factorials ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">❗</div>
+        <div class="topic-title">Working with Factorials</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Definition:</strong> For a non-negative integer $n$, the factorial is:
+        $$n! = n \cdot (n-1) \cdot (n-2) \cdots 2 \cdot 1$$
+        with the special case $0! = 1$ by convention.</p>
+        <p>Examples: $\;1! = 1,\quad 2! = 2,\quad 3! = 6,\quad 4! = 24,\quad 5! = 120$</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>The key manipulation:</strong> You can always factor out one extra term from a factorial by writing the next factorial in terms of the current one:
+        $$(n+1)! = (n+1) \cdot n!$$
+        This is the single most important factorial identity. It follows directly from the definition — $(n+1)!$ is just the product $1 \cdot 2 \cdots n \cdot (n+1)$, which equals $n! \cdot (n+1)$.</p>
+        <p>You can extend this in either direction:
+        $$(n+2)! = (n+2)(n+1) \cdot n!$$
+        $$(n-1)! = \frac{n!}{n}$$</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Simplifying factorial ratios:</strong> Most factorial expressions in series problems appear as ratios. The trick is to expand the larger factorial until it contains the smaller one as a factor, then cancel.</p>
+        <p>For example:
+        $$\frac{(n+1)!}{n!} = \frac{(n+1) \cdot n!}{n!} = n+1$$
+        $$\frac{(n+2)!}{n!} = \frac{(n+2)(n+1) \cdot n!}{n!} = (n+2)(n+1)$$
+        $$\frac{n!}{(n-2)!} = \frac{n(n-1) \cdot (n-2)!}{(n-2)!} = n(n-1)$$</p>
+        <p>The pattern: expand the larger factorial downward until you reach the smaller one, then cancel everything below it.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Factorial Identities</div>
+        <div class="formula-row">
+          <div class="formula-name">Definition</div>
+          <div class="formula-math">$n! = n(n-1)(n-2)\cdots2\cdot1$, $\quad 0!=1$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key identity</div>
+          <div class="formula-math">$(n+1)! = (n+1)\cdot n!$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Two steps up</div>
+          <div class="formula-math">$(n+2)! = (n+2)(n+1)\cdot n!$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Ratio shortcut</div>
+          <div class="formula-math">$\dfrac{(n+k)!}{n!} = (n+k)(n+k-1)\cdots(n+1)$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Step down</div>
+          <div class="formula-math">$(n-1)! = \dfrac{n!}{n}$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Sum factored</div>
+          <div class="formula-math">$(n+1)! + (n+2)! = (n+1)!\bigl[1+(n+2)\bigr] = (n+3)(n+1)!$</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 7</div>
+          <div class="problem-statement">Simplify each expression.<br><br>
+          (a) $\dfrac{(n+3)!}{(n+1)!}$ &nbsp;&nbsp;&nbsp; (b) $\dfrac{(2n+2)!}{(2n)!}$ &nbsp;&nbsp;&nbsp; (c) $\dfrac{n!}{(n-3)!}$</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">(a) Expand $(n+3)!$ down to $(n+1)!$:
+            $$\frac{(n+3)!}{(n+1)!} = \frac{(n+3)(n+2)\cdot(n+1)!}{(n+1)!} = (n+3)(n+2)$$</div>
+            <div class="solution-step">(b) Expand $(2n+2)!$ down to $(2n)!$:
+            $$\frac{(2n+2)!}{(2n)!} = \frac{(2n+2)(2n+1)\cdot(2n)!}{(2n)!} = (2n+2)(2n+1) = 2(n+1)(2n+1)$$</div>
+            <div class="solution-step">(c) Expand $n!$ down to $(n-3)!$:
+            $$\frac{n!}{(n-3)!} = \frac{n(n-1)(n-2)\cdot(n-3)!}{(n-3)!} = n(n-1)(n-2)$$</div>
+            <div class="solution-answer">(a) $(n+3)(n+2)$ &nbsp;&nbsp; (b) $2(n+1)(2n+1)$ &nbsp;&nbsp; (c) $n(n-1)(n-2)$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 8</div>
+          <div class="problem-statement">Simplify $\dfrac{(n+1)!}{n! + (n-1)!}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Factor $(n-1)!$ out of the denominator:
+            $$n! + (n-1)! = n\cdot(n-1)! + (n-1)! = (n-1)!(n+1)$$</div>
+            <div class="solution-step">Also write the numerator: $(n+1)! = (n+1)\cdot n \cdot (n-1)!$</div>
+            <div class="solution-step">$$\frac{(n+1)!}{n!+(n-1)!} = \frac{(n+1)\cdot n \cdot (n-1)!}{(n-1)!(n+1)} = \frac{(n+1)\cdot n}{n+1}$$</div>
+            <div class="solution-answer">$$\frac{(n+1)!}{n!+(n-1)!} = n$$</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 9</div>
+          <div class="problem-statement">Simplify $\dfrac{(n+1)! \cdot n!}{(n+2)! \cdot (n-1)!}$ — the kind of expression that appears in the Ratio Test.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Replace each factorial using the key identity:
+            $$(n+1)! = (n+1)\cdot n!, \quad (n+2)! = (n+2)(n+1)\cdot n!, \quad n! = n\cdot(n-1)!$$</div>
+            <div class="solution-step">$$\frac{(n+1)!\cdot n!}{(n+2)!\cdot (n-1)!} = \frac{(n+1)\cdot n!\cdot n\cdot(n-1)!}{(n+2)(n+1)\cdot n!\cdot (n-1)!}$$</div>
+            <div class="solution-step">Cancel $n!$, $(n-1)!$, and $(n+1)$:
+            $$= \frac{n}{n+2}$$</div>
+            <div class="solution-answer">$$\frac{(n+1)!\cdot n!}{(n+2)!\cdot(n-1)!} = \frac{n}{n+2}$$</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main -->
+</div><!-- /#view-5-4 -->
+
+<!-- ════════════════════════════════════════
+     SECTION 5.5 VIEW
+════════════════════════════════════════ -->
+<div class="view" id="view-5-5">
+  <div class="site-header">
+    <button class="back-btn" onclick="navigate('m5')">← Back</button>
+    <span class="site-logo">Calc II</span>
+    <div class="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('menu')">Modules</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('m5')">Module 5</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">5.5 Alternating Series &amp; Absolute Convergence</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="page-header">
+      <div class="page-tag">Section 5.5</div>
+      <div class="page-title">Alternating Series &amp; Absolute Convergence</div>
+      <div class="page-desc">Testing series whose terms alternate in sign, and classifying the strength of convergence</div>
+    </div>
+
+    <!-- ─── TOPIC 1: Alternating Series Test ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">〜</div>
+        <div class="topic-title">Alternating Series Test (AST)</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>What is an alternating series?</strong> A series whose terms alternate between positive and negative. The two standard forms are:
+        $$\sum_{n=1}^{\infty}(-1)^{n+1}\,a_n = a_1 - a_2 + a_3 - a_4 + \cdots$$
+        $$\sum_{n=1}^{\infty}(-1)^{n}\,a_n = -a_1 + a_2 - a_3 + a_4 - \cdots$$
+        where $a_n > 0$ for all $n$. The $(-1)^n$ or $(-1)^{n+1}$ factor is purely responsible for the sign alternation.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Alternating Series Test:</strong> An alternating series $\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}a_n$ converges if both conditions hold:</p>
+        <p>&nbsp;&nbsp;&nbsp;<strong>1. Decreasing:</strong> $a_{n+1} \leq a_n$ for all $n \geq N$ &nbsp;(eventually non-increasing)</p>
+        <p>&nbsp;&nbsp;&nbsp;<strong>2. Limit zero:</strong> $\displaystyle\lim_{n\to\infty} a_n = 0$</p>
+        <p>If both conditions are satisfied, the series <strong>converges</strong>. The AST can only prove convergence — it cannot prove divergence. It also says nothing about whether the convergence is absolute or conditional.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>📌 Reminder — Using the First Derivative Test for "Decreasing":</strong> To verify Condition 1, replace $n$ with $x$ to get a continuous function $f(x)$, then compute $f'(x)$.</p>
+        <p>If $f'(x) < 0$ for all $x \geq N$, then $f$ is decreasing on $[N, \infty)$, which means $a_n = f(n)$ is eventually decreasing. ✓</p>
+        <p>This is usually the fastest way to check the condition — especially when comparing $a_{n+1} \leq a_n$ directly would require messy algebra.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>📌 Special Case — $\lim_{n\to\infty} n^{1/n} = 1$:</strong> When checking whether $\lim_{n\to\infty} a_n = 0$, watch out for expressions involving $n^{1/n}$. Since $\lim_{n\to\infty} n^{1/n} = 1$, any $a_n$ built around $n^{1/n}$ will not go to zero — meaning the series diverges by the Divergence Test and the AST does not apply.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>📌 Reminder — $n$th-Term Test for Divergence:</strong> Before applying the AST, always check whether $\lim_{n\to\infty} a_n = 0$. If the limit is not zero (or does not exist), skip the AST entirely — the series diverges immediately by the Divergence Test.</p>
+        <p>Only if $\lim a_n = 0$ should you proceed to check the decreasing condition and apply the AST.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Alternating Series Test</div>
+        <div class="formula-row">
+          <div class="formula-name">Standard form</div>
+          <div class="formula-math">$\displaystyle\sum(-1)^{n+1}a_n$ or $\displaystyle\sum(-1)^{n}a_n$, where $a_n > 0$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Condition 1</div>
+          <div class="formula-math">$a_{n+1} \leq a_n$ for all $n \geq N$ &nbsp;(eventually decreasing)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Condition 2</div>
+          <div class="formula-math">$\lim_{n\to\infty} a_n = 0$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Conclusion</div>
+          <div class="formula-math">Both hold $\Rightarrow$ series <strong>converges</strong></div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">If $\lim a_n \neq 0$</div>
+          <div class="formula-math">Diverges by the Divergence Test — do not apply AST</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">AST limitation</div>
+          <div class="formula-math">Can only prove convergence, not divergence</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 1</div>
+          <div class="problem-statement">Determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">This is the <strong>alternating harmonic series</strong> with $a_n = \dfrac{1}{n}$.</div>
+            <div class="solution-step"><strong>Condition 1:</strong> $a_{n+1} = \dfrac{1}{n+1} \leq \dfrac{1}{n} = a_n$ ✓ (decreasing)</div>
+            <div class="solution-step"><strong>Condition 2:</strong> $\displaystyle\lim_{n\to\infty}\frac{1}{n} = 0$ ✓</div>
+            <div class="solution-answer">Both conditions hold, so the series <strong>converges</strong> by the AST.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 2</div>
+          <div class="problem-statement">Determine whether $\displaystyle\sum_{n=1}^{\infty} \frac{(-1)^n n}{n^2+1}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Let $a_n = \dfrac{n}{n^2+1}$. First check the limit: $\displaystyle\lim_{n\to\infty}\frac{n}{n^2+1} = 0$ ✓</div>
+            <div class="solution-step"><strong>Condition 1 (decreasing):</strong> Let $f(x) = \dfrac{x}{x^2+1}$. Then:
+            $$f'(x) = \frac{(x^2+1) - x(2x)}{(x^2+1)^2} = \frac{1-x^2}{(x^2+1)^2} < 0 \text{ for } x > 1$$
+            So $a_n$ is eventually decreasing. ✓</div>
+            <div class="solution-step"><strong>Condition 2:</strong> $\lim a_n = 0$ ✓ (checked above)</div>
+            <div class="solution-answer">Both conditions hold, so the series <strong>converges</strong> by the AST.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 3</div>
+          <div class="problem-statement">Determine whether $\displaystyle\sum_{n=1}^{\infty}(-1)^n\frac{n}{n+1}$ converges or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">Let $a_n = \dfrac{n}{n+1}$. Check the limit first:
+            $$\lim_{n\to\infty}\frac{n}{n+1} = 1 \neq 0$$</div>
+            <div class="solution-step">Since $\lim a_n \neq 0$, the terms of the original series do not go to zero. Do not proceed with the AST.</div>
+            <div class="solution-answer">The series <strong>diverges</strong> by the Divergence Test ($n$th-term test).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 2: Remainders in Alternating Series ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">📏</div>
+        <div class="topic-title">Remainders in Alternating Series</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>The Alternating Series Remainder:</strong> If an alternating series satisfies the conditions of the AST and converges to a sum $S$, then the error made by approximating $S$ with the $n$th partial sum $S_n$ is bounded by the very next term:
+        $$|R_n| = |S - S_n| \leq a_{n+1}$$
+        where $a_{n+1}$ is the absolute value of the first omitted term.</p>
+        <p>In other words, <strong>the error is always less than or equal to the first term you left out</strong>.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Two common question types:</strong></p>
+        <p>• <strong>Find an error bound:</strong> Given that you used $n$ terms, what is the maximum possible error? Answer: $|R_n| \leq a_{n+1}$.</p>
+        <p>• <strong>How many terms are needed?</strong> Given an accuracy requirement $\varepsilon$, find the smallest $n$ such that $a_{n+1} \leq \varepsilon$. Solve the inequality $a_{n+1} \leq \varepsilon$ for $n$.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Alternating Series Remainder</div>
+        <div class="formula-row">
+          <div class="formula-name">Error bound</div>
+          <div class="formula-math">$|R_n| = |S - S_n| \leq a_{n+1}$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$R_n$ defined as</div>
+          <div class="formula-math">$R_n = S - S_n$ &nbsp;(the exact error after $n$ terms)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Find # of terms</div>
+          <div class="formula-math">Solve $a_{n+1} \leq \varepsilon$ for $n$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Requirement</div>
+          <div class="formula-math">Series must first satisfy both AST conditions</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 4</div>
+          <div class="problem-statement">Approximate the sum of $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}$ using the first 4 terms, and find an upper bound for the error.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">The series satisfies the AST (shown in Problem 1), so the remainder bound applies.</div>
+            <div class="solution-step"><strong>Partial sum:</strong>
+            $$S_4 = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} = \frac{12-6+4-3}{12} = \frac{7}{12} \approx 0.583$$</div>
+            <div class="solution-step"><strong>Error bound:</strong> The first omitted term is $a_5 = \dfrac{1}{5}$, so:
+            $$|R_4| \leq a_5 = \frac{1}{5} = 0.2$$</div>
+            <div class="solution-answer">$S \approx \dfrac{7}{12}$ with error $|R_4| \leq 0.2$. (The true sum is $\ln 2 \approx 0.693$.)</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 5</div>
+          <div class="problem-statement">How many terms of $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n^2}$ must be summed to approximate $S$ within an error of $0.01$?</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">The series satisfies the AST. We need $|R_n| \leq a_{n+1} \leq 0.01$:
+            $$\frac{1}{(n+1)^2} \leq 0.01$$</div>
+            <div class="solution-step">$$(n+1)^2 \geq 100 \implies n+1 \geq 10 \implies n \geq 9$$</div>
+            <div class="solution-answer">At least <strong>9 terms</strong> are needed to guarantee an error of at most $0.01$.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 6</div>
+          <div class="problem-statement">How many terms of $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n!}$ are needed to approximate $S$ accurate to 4 decimal places (error $< 0.00005$)?</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">We need $a_{n+1} = \dfrac{1}{(n+1)!} < 0.00005$, so $(n+1)! > 20000$.</div>
+            <div class="solution-step">Check factorials:
+            <br>$7! = 5040$ &nbsp; — too small
+            <br>$8! = 40320 > 20000$ ✓ &nbsp; → $n+1 = 8$, so $n = 7$</div>
+            <div class="solution-answer">At least <strong>7 terms</strong> are needed. ($S_7 \approx 0.6321$, and the true sum is $1 - 1/e \approx 0.6321$.)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 4: Absolute Convergence ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">💠</div>
+        <div class="topic-title">Absolute Convergence</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Definition:</strong> A series $\displaystyle\sum_{n=1}^{\infty} a_n$ converges <em>absolutely</em> if the series of absolute values
+        $$\sum_{n=1}^{\infty} |a_n|$$
+        converges. In other words, the series still converges even when all signs are made positive.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Theorem — Absolute Convergence Implies Convergence:</strong> If $\displaystyle\sum |a_n|$ converges, then $\displaystyle\sum a_n$ converges.</p>
+        <p>This means absolute convergence is a <em>stronger</em> condition than ordinary convergence. Every absolutely convergent series is convergent, but not every convergent series is absolutely convergent.</p>
+        <p><strong>Strategy:</strong> To test for absolute convergence, take the absolute value of every term and apply any convergence test you know (p-series, geometric, integral test, comparison tests, etc.) to the resulting series $\sum |a_n|$.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Absolute Convergence</div>
+        <div class="formula-row">
+          <div class="formula-name">Definition</div>
+          <div class="formula-math">$\sum a_n$ absolutely converges if $\sum |a_n|$ converges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key theorem</div>
+          <div class="formula-math">Absolutely convergent $\Rightarrow$ convergent (not reversible!)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">How to test</div>
+          <div class="formula-math">Drop all signs, test $\sum|a_n|$ with any standard test</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Strength</div>
+          <div class="formula-math">Absolute convergence is stronger than ordinary convergence</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 4</div>
+          <div class="problem-statement">Determine whether $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n^2}$ converges absolutely, converges conditionally, or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Test for absolute convergence:</strong> $\displaystyle\sum_{n=1}^{\infty}\left|\frac{(-1)^{n+1}}{n^2}\right| = \sum_{n=1}^{\infty}\frac{1}{n^2}$</div>
+            <div class="solution-step">This is a convergent p-series ($p = 2 > 1$). So $\sum|a_n|$ converges.</div>
+            <div class="solution-answer">The series <strong>converges absolutely</strong>.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 5</div>
+          <div class="problem-statement">Determine whether $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n}{\sqrt{n}}$ converges absolutely, converges conditionally, or diverges.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Test for absolute convergence:</strong> $\displaystyle\sum\left|\frac{(-1)^n}{\sqrt{n}}\right| = \sum\frac{1}{n^{1/2}}$, a p-series with $p = \frac{1}{2} \leq 1$ → <strong>diverges</strong>. Not absolutely convergent.</div>
+            <div class="solution-step"><strong>Test for ordinary convergence (AST):</strong> $a_n = \dfrac{1}{\sqrt{n}}$ is decreasing and $\lim a_n = 0$ ✓ → converges by AST.</div>
+            <div class="solution-answer">The series <strong>converges conditionally</strong> (converges, but not absolutely).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 5: Conditional Convergence ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">⚡</div>
+        <div class="topic-title">Conditional Convergence</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Definition:</strong> A series $\displaystyle\sum a_n$ converges <em>conditionally</em> if it converges, but does <em>not</em> converge absolutely — meaning $\displaystyle\sum a_n$ converges but $\displaystyle\sum |a_n|$ diverges.</p>
+        <p>The name "conditional" reflects that the convergence depends on the signs — rearranging the terms of a conditionally convergent series can change its sum to any value, or even make it diverge.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>The classic example — Alternating Harmonic Series:</strong>
+        $$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n} = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots = \ln 2$$</p>
+        <p>• $\displaystyle\sum\frac{1}{n}$ diverges (harmonic series) → <strong>not absolutely convergent</strong></p>
+        <p>• $\displaystyle\sum\frac{(-1)^{n+1}}{n}$ converges by the AST → <strong>converges conditionally</strong></p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>Classification strategy — three possible outcomes:</strong></p>
+        <p><strong>Step 1.</strong> Test $\sum|a_n|$. If it converges → <strong>absolutely convergent</strong>. Done.</p>
+        <p><strong>Step 2.</strong> If $\sum|a_n|$ diverges, test $\sum a_n$ (e.g., with the AST). If it converges → <strong>conditionally convergent</strong>.</p>
+        <p><strong>Step 3.</strong> If both diverge → the series <strong>diverges</strong>.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Classifying Convergence</div>
+        <div class="formula-row">
+          <div class="formula-name">Absolutely convergent</div>
+          <div class="formula-math">$\sum|a_n|$ converges &nbsp;→&nbsp; $\sum a_n$ also converges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Conditionally convergent</div>
+          <div class="formula-math">$\sum a_n$ converges, but $\sum|a_n|$ diverges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Diverges</div>
+          <div class="formula-math">$\sum a_n$ diverges (and so does $\sum|a_n|$)</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Classic example</div>
+          <div class="formula-math">$\sum\dfrac{(-1)^{n+1}}{n}$ converges conditionally; &nbsp;$\sum\dfrac{(-1)^{n+1}}{n^2}$ converges absolutely</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key hierarchy</div>
+          <div class="formula-math">Absolutely convergent $\subsetneq$ Convergent</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 6</div>
+          <div class="problem-statement">Classify $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{\sqrt[3]{n}}$ as absolutely convergent, conditionally convergent, or divergent.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Step 1 — Absolute convergence:</strong> $\displaystyle\sum\frac{1}{n^{1/3}}$ is a p-series with $p = \frac{1}{3} \leq 1$ → diverges. Not absolutely convergent.</div>
+            <div class="solution-step"><strong>Step 2 — AST:</strong> $a_n = n^{-1/3}$ is decreasing and $\lim a_n = 0$ ✓ → the alternating series converges.</div>
+            <div class="solution-answer">The series <strong>converges conditionally</strong>.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 7</div>
+          <div class="problem-statement">Classify $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n^2}{n^3+1}$ as absolutely convergent, conditionally convergent, or divergent.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Step 1 — Absolute convergence:</strong> $\displaystyle\sum\frac{n^2}{n^3+1}$. Use LCT with $b_n = \dfrac{1}{n}$:
+            $$L = \lim_{n\to\infty}\frac{n^2/(n^3+1)}{1/n} = \lim_{n\to\infty}\frac{n^3}{n^3+1} = 1$$
+            Since $\sum\frac{1}{n}$ diverges, so does $\sum\frac{n^2}{n^3+1}$. Not absolutely convergent.</div>
+            <div class="solution-step"><strong>Step 2 — AST:</strong> $a_n = \dfrac{n^2}{n^3+1}$. Check limit: $\lim a_n = 0$ ✓. Check decreasing via $f'(x) < 0$ for large $x$ ✓. Converges by AST.</div>
+            <div class="solution-answer">The series <strong>converges conditionally</strong>.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 8</div>
+          <div class="problem-statement">Classify $\displaystyle\sum_{n=1}^{\infty}\frac{(-1)^n n}{e^n}$ as absolutely convergent, conditionally convergent, or divergent.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step"><strong>Step 1 — Absolute convergence:</strong> $\displaystyle\sum\frac{n}{e^n} = \sum n\left(\frac{1}{e}\right)^n$. This is a geometric-type series where the exponential dominates the polynomial growth. Using the Integral Test or Ratio Test, it converges.</div>
+            <div class="solution-step">Since $\sum|a_n|$ converges, there is no need to go further.</div>
+            <div class="solution-answer">The series <strong>converges absolutely</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main -->
+</div><!-- /#view-5-5 -->
+
+<!-- ════════════════════════════════════════
+     SECTION 5.6 VIEW
+════════════════════════════════════════ -->
+<div class="view" id="view-5-6">
+  <div class="site-header">
+    <button class="back-btn" onclick="navigate('m5')">← Back</button>
+    <span class="site-logo">Calc II</span>
+    <div class="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('menu')">Modules</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('m5')">Module 5</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">5.6 Ratio &amp; Root Tests</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="page-header">
+      <div class="page-tag">Section 5.6</div>
+      <div class="page-title">Ratio &amp; Root Tests</div>
+      <div class="page-desc">Two powerful tests for absolute convergence — especially useful when other tests fall short</div>
+    </div>
+
+    <!-- ─── TOPIC 1: The Ratio Test ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">➗</div>
+        <div class="topic-title">The Ratio Test</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>The Ratio Test:</strong> Given a series $\displaystyle\sum_{n=1}^{\infty} a_n$, compute
+        $$L = \lim_{n \to \infty} \left|\frac{a_{n+1}}{a_n}\right|$$
+        Then:</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $L < 1$: the series <strong>converges absolutely</strong>.</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $L > 1$ or $L = \infty$: the series <strong>diverges</strong>.</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $L = 1$: the test is <strong>inconclusive</strong> — try a different test.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>When to use the Ratio Test:</strong> The Ratio Test shines when $a_n$ involves <em>factorials</em> or <em>exponentials</em>, because the ratio $a_{n+1}/a_n$ will simplify cleanly using the factorial identity $(n+1)! = (n+1)\cdot n!$.</p>
+        <p>Look for these signals in $a_n$:</p>
+        <p>&nbsp;&nbsp;&nbsp;• Factorials: $n!$, $(2n)!$, $(n+1)!$</p>
+        <p>&nbsp;&nbsp;&nbsp;• Exponentials combined with polynomials: $\dfrac{n^k}{r^n}$, $\dfrac{r^n}{n!}$</p>
+        <p>&nbsp;&nbsp;&nbsp;• Products where consecutive terms cancel nicely</p>
+        <p>⚠️ The Ratio Test is <strong>inconclusive for p-series</strong> — it always gives $L = 1$ for $\sum 1/n^p$, no matter what $p$ is.</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Ratio Test</div>
+        <div class="formula-row">
+          <div class="formula-name">Compute</div>
+          <div class="formula-math">$L = \displaystyle\lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_n}\right|$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$L < 1$</div>
+          <div class="formula-math">Converges absolutely</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$L > 1$ or $L = \infty$</div>
+          <div class="formula-math">Diverges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$L = 1$</div>
+          <div class="formula-math">Inconclusive — use another test</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Best for</div>
+          <div class="formula-math">Factorials, exponentials, or products that telescope in the ratio</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key tool</div>
+          <div class="formula-math">$(n+1)! = (n+1)\cdot n!$ — cancel factorials in the ratio</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 1</div>
+          <div class="problem-statement">Use the Ratio Test on $\displaystyle\sum_{n=1}^{\infty} \frac{2^n}{n!}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$$\left|\frac{a_{n+1}}{a_n}\right| = \frac{2^{n+1}}{(n+1)!} \cdot \frac{n!}{2^n} = \frac{2^{n+1}}{2^n} \cdot \frac{n!}{(n+1)!} = 2 \cdot \frac{1}{n+1} = \frac{2}{n+1}$$</div>
+            <div class="solution-step">$$L = \lim_{n\to\infty}\frac{2}{n+1} = 0 < 1$$</div>
+            <div class="solution-answer">$L = 0 < 1$, so $\displaystyle\sum_{n=1}^{\infty}\frac{2^n}{n!}$ <strong>converges absolutely</strong> by the Ratio Test.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 2</div>
+          <div class="problem-statement">Use the Ratio Test on $\displaystyle\sum_{n=1}^{\infty} \frac{n!}{3^n}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)!}{3^{n+1}} \cdot \frac{3^n}{n!} = \frac{(n+1)\cdot n!}{n!} \cdot \frac{3^n}{3^{n+1}} = \frac{n+1}{3}$$</div>
+            <div class="solution-step">$$L = \lim_{n\to\infty}\frac{n+1}{3} = \infty > 1$$</div>
+            <div class="solution-answer">$L = \infty > 1$, so $\displaystyle\sum_{n=1}^{\infty}\frac{n!}{3^n}$ <strong>diverges</strong> by the Ratio Test.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 3</div>
+          <div class="problem-statement">Use the Ratio Test on $\displaystyle\sum_{n=1}^{\infty} \frac{n^2}{2^n}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$$\left|\frac{a_{n+1}}{a_n}\right| = \frac{(n+1)^2}{2^{n+1}} \cdot \frac{2^n}{n^2} = \frac{(n+1)^2}{2n^2}$$</div>
+            <div class="solution-step">$$L = \lim_{n\to\infty}\frac{(n+1)^2}{2n^2} = \frac{1}{2}\lim_{n\to\infty}\left(\frac{n+1}{n}\right)^2 = \frac{1}{2}(1)^2 = \frac{1}{2} < 1$$</div>
+            <div class="solution-answer">$L = \dfrac{1}{2} < 1$, so $\displaystyle\sum_{n=1}^{\infty}\frac{n^2}{2^n}$ <strong>converges absolutely</strong> by the Ratio Test.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 4</div>
+          <div class="problem-statement">Use the Ratio Test on $\displaystyle\sum_{n=1}^{\infty} \frac{(-3)^n}{n \cdot 2^{2n}}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$$\left|\frac{a_{n+1}}{a_n}\right| = \frac{3^{n+1}}{(n+1)\cdot 4^{n+1}} \cdot \frac{n \cdot 4^n}{3^n} = \frac{3 \cdot n}{4(n+1)}$$</div>
+            <div class="solution-step">$$L = \lim_{n\to\infty}\frac{3n}{4(n+1)} = \frac{3}{4} < 1$$</div>
+            <div class="solution-answer">$L = \dfrac{3}{4} < 1$, so the series <strong>converges absolutely</strong> by the Ratio Test.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="topic-divider" />
+
+    <!-- ─── TOPIC 2: The Root Test ─── -->
+    <div class="topic-block">
+      <div class="topic-header">
+        <div class="topic-icon">√</div>
+        <div class="topic-title">The Root Test</div>
+      </div>
+
+      <div class="note-card">
+        <p><strong>The Root Test:</strong> Given a series $\displaystyle\sum_{n=1}^{\infty} a_n$, compute
+        $$L = \lim_{n \to \infty} \sqrt[n]{|a_n|} = \lim_{n\to\infty}|a_n|^{1/n}$$
+        Then:</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $L < 1$: the series <strong>converges absolutely</strong>.</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $L > 1$ or $L = \infty$: the series <strong>diverges</strong>.</p>
+        <p>&nbsp;&nbsp;&nbsp;• If $L = 1$: the test is <strong>inconclusive</strong> — try a different test.</p>
+      </div>
+
+      <div class="note-card">
+        <p><strong>When to use the Root Test:</strong> The Root Test is most effective when $a_n$ is itself raised to the $n$th power — the $n$th root then cancels the exponent cleanly, leaving a simple expression to evaluate.</p>
+        <p>Look for this signal: $a_n = \bigl(f(n)\bigr)^n$ for some function $f$. The root test gives $L = \lim |f(n)|$ directly.</p>
+        <p>Key limits that appear frequently:</p>
+        <p>&nbsp;&nbsp;&nbsp;• $\lim_{n\to\infty} n^{1/n} = 1$ &nbsp;(so $\sqrt[n]{n^k} \to 1$ for any fixed $k$)</p>
+        <p>&nbsp;&nbsp;&nbsp;• $\lim_{n\to\infty} c^{1/n} = 1$ for any constant $c > 0$</p>
+        <p>&nbsp;&nbsp;&nbsp;• $\lim_{n\to\infty}\left(\frac{f(n)}{g(n)}\right)^n$ — simplify the base first, then evaluate</p>
+      </div>
+
+      <div class="formula-sheet">
+        <div class="formula-sheet-label">📋 Cheat Sheet — Root Test</div>
+        <div class="formula-row">
+          <div class="formula-name">Compute</div>
+          <div class="formula-math">$L = \displaystyle\lim_{n\to\infty}|a_n|^{1/n}$</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$L < 1$</div>
+          <div class="formula-math">Converges absolutely</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$L > 1$ or $L = \infty$</div>
+          <div class="formula-math">Diverges</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">$L = 1$</div>
+          <div class="formula-math">Inconclusive — use another test</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Best for</div>
+          <div class="formula-math">$a_n = \bigl(f(n)\bigr)^n$ — the $n$th root cancels the power directly</div>
+        </div>
+        <div class="formula-row">
+          <div class="formula-name">Key limit</div>
+          <div class="formula-math">$\lim_{n\to\infty} n^{1/n} = 1$ &nbsp;(comes up often when simplifying $L$)</div>
+        </div>
+      </div>
+
+      <div class="problems-section">
+        <div class="problems-label">Practice Problems</div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 5</div>
+          <div class="problem-statement">Use the Root Test on $\displaystyle\sum_{n=1}^{\infty}\left(\frac{n}{2n+1}\right)^n$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$$L = \lim_{n\to\infty}\left|\left(\frac{n}{2n+1}\right)^n\right|^{1/n} = \lim_{n\to\infty}\frac{n}{2n+1}$$</div>
+            <div class="solution-step">$$= \lim_{n\to\infty}\frac{1}{2 + 1/n} = \frac{1}{2} < 1$$</div>
+            <div class="solution-answer">$L = \dfrac{1}{2} < 1$, so the series <strong>converges absolutely</strong> by the Root Test.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 6</div>
+          <div class="problem-statement">Use the Root Test on $\displaystyle\sum_{n=1}^{\infty}\left(\frac{3n+2}{n+5}\right)^n$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$$L = \lim_{n\to\infty}\left(\frac{3n+2}{n+5}\right)^{n \cdot \frac{1}{n}} = \lim_{n\to\infty}\frac{3n+2}{n+5}$$</div>
+            <div class="solution-step">$$= \lim_{n\to\infty}\frac{3 + 2/n}{1 + 5/n} = 3 > 1$$</div>
+            <div class="solution-answer">$L = 3 > 1$, so the series <strong>diverges</strong> by the Root Test.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 7</div>
+          <div class="problem-statement">Use the Root Test on $\displaystyle\sum_{n=1}^{\infty}\frac{(-2)^n}{n^n}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$$L = \lim_{n\to\infty}\left|\frac{(-2)^n}{n^n}\right|^{1/n} = \lim_{n\to\infty}\frac{2^{n \cdot 1/n}}{n^{n \cdot 1/n}} = \lim_{n\to\infty}\frac{2}{n}$$</div>
+            <div class="solution-step">$$= 0 < 1$$</div>
+            <div class="solution-answer">$L = 0 < 1$, so $\displaystyle\sum_{n=1}^{\infty}\frac{(-2)^n}{n^n}$ <strong>converges absolutely</strong> by the Root Test.</div>
+          </div>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">Problem 8</div>
+          <div class="problem-statement">Use the Root Test on $\displaystyle\sum_{n=2}^{\infty}\frac{1}{(\ln n)^n}$.</div>
+          <button class="toggle-btn" onclick="toggleSolution(this)">Show Solution</button>
+          <div class="solution">
+            <div class="solution-step">$$L = \lim_{n\to\infty}\left(\frac{1}{(\ln n)^n}\right)^{1/n} = \lim_{n\to\infty}\frac{1}{\ln n}$$</div>
+            <div class="solution-step">As $n\to\infty$, $\ln n \to \infty$, so $\dfrac{1}{\ln n} \to 0$.</div>
+            <div class="solution-answer">$L = 0 < 1$, so $\displaystyle\sum_{n=2}^{\infty}\frac{1}{(\ln n)^n}$ <strong>converges absolutely</strong> by the Root Test.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.main -->
+</div><!-- /#view-5-6 -->
+
+<script>
+  // ── Render KaTeX across the whole document on load ──
+  document.addEventListener('DOMContentLoaded', function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true  },
+        { left: '$',  right: '$',  display: false }
+      ],
+      throwOnError: false
+    });
+  });
+
+  // ── Navigation ──
+  function navigate(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + viewId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (viewId === 'quiz-m5') generateAndRenderQuiz();
+    if (viewId === 'quiz-history-m5') renderScoreHistory();
+  }
+
+  // ── Toggle solution panels ──
+  function toggleSolution(btn) {
+    const solution = btn.nextElementSibling;
+    const isOpen   = solution.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Hide Solution' : 'Show Solution';
+  }
+
+  // ── Quiz ──
+  const questionPool = [
+    // ─── 5.1: Sequences ───
+    { section: '5.1', stem: 'Given the sequence $a_n = \\dfrac{4n^2 - 1}{2n^2 + 3}$.',
+      parts: [
+        { label: '(a) &nbsp;What is $\\lim_{n \\to \\infty} a_n$?',
+          options: ['$0$','$2$','$4$','$\\infty$'], correct: 1 },
+        { label: '(b) &nbsp;Does the sequence converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 }
+      ]
+    },
+    { section: '5.1', stem: 'Given the sequence $a_n = \\dfrac{(-1)^n}{n}$.',
+      parts: [
+        { label: '(a) &nbsp;What is $\\lim_{n \\to \\infty} a_n$?',
+          options: ['$-1$','$0$','$1$','Does not exist'], correct: 1 },
+        { label: '(b) &nbsp;Does the sequence converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 }
+      ]
+    },
+    { section: '5.1', stem: 'Consider the sequence $a_n = \\left(1 + \\dfrac{1}{n}\\right)^n$.',
+      parts: [
+        { label: '(a) &nbsp;This sequence converges to which value?',
+          options: ['$1$','$2$','$e$','$\\pi$'], correct: 2 }
+      ]
+    },
+    { section: '5.1', stem: 'Given the sequence $a_n = \\dfrac{\\ln n}{n}$.',
+      parts: [
+        { label: '(a) &nbsp;What is $\\lim_{n \\to \\infty} \\dfrac{\\ln n}{n}$?',
+          options: ['$0$','$1$','$e$','$\\infty$'], correct: 0 },
+        { label: '(b) &nbsp;Does the sequence converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 }
+      ]
+    },
+    { section: '5.1', stem: 'Given the sequence $a_n = \\dfrac{n!}{n^n}$.',
+      parts: [
+        { label: '(a) &nbsp;Does the sequence converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 },
+        { label: '(b) &nbsp;If it converges, what is the limit?',
+          options: ['$0$','$\\dfrac{1}{e}$','$1$','$e$'], correct: 0 }
+      ]
+    },
+    // ─── 5.2: Infinite Series ───
+    { section: '5.2', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{n}{2n - 1}$.',
+      parts: [
+        { label: '(a) &nbsp;Compute $\\lim_{n \\to \\infty} \\dfrac{n}{2n-1}$.',
+          options: ['$0$','$\\dfrac{1}{2}$','$1$','$\\infty$'], correct: 1 },
+        { label: '(b) &nbsp;What does the Divergence Test conclude?',
+          options: ['The series converges','The series diverges','The test is inconclusive'], correct: 1 }
+      ]
+    },
+    { section: '5.2', stem: 'Consider $\\displaystyle\\sum_{n=0}^{\\infty} \\left(\\dfrac{1}{3}\\right)^n$.',
+      parts: [
+        { label: '(a) &nbsp;What type of series is this?',
+          options: ['Harmonic series','Geometric series','$p$-series','Telescoping series'], correct: 1 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 },
+        { label: '(c) &nbsp;What is the sum?',
+          options: ['$\\dfrac{1}{2}$','$1$','$\\dfrac{3}{2}$','$3$'], correct: 2 }
+      ]
+    },
+    { section: '5.2', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{1}{n(n+1)}$. Note that $\\dfrac{1}{n(n+1)} = \\dfrac{1}{n} - \\dfrac{1}{n+1}$.',
+      parts: [
+        { label: '(a) &nbsp;What type of series is this?',
+          options: ['Geometric','Harmonic','Telescoping','$p$-series'], correct: 2 },
+        { label: '(b) &nbsp;What is the sum?',
+          options: ['$\\dfrac{1}{2}$','$1$','$2$','Diverges'], correct: 1 }
+      ]
+    },
+    { section: '5.2', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} 5\\left(\\dfrac{2}{3}\\right)^n$.',
+      parts: [
+        { label: '(a) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 },
+        { label: '(b) &nbsp;What is the sum?',
+          options: ['$5$','$10$','$15$','$30$'], correct: 1 }
+      ]
+    },
+    { section: '5.2', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\left(\\dfrac{1}{n} - \\dfrac{1}{n+2}\\right)$.',
+      parts: [
+        { label: '(a) &nbsp;What type of series is this?',
+          options: ['Geometric','Telescoping','Alternating','Harmonic'], correct: 1 },
+        { label: '(b) &nbsp;What is the sum?',
+          options: ['$1$','$\\dfrac{3}{2}$','$2$','Diverges'], correct: 1 }
+      ]
+    },
+    // ─── 5.3: Integral Test / P-Series ───
+    { section: '5.3', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{1}{\\sqrt{n}}$.',
+      parts: [
+        { label: '(a) &nbsp;What is the value of $p$ for this $p$-series?',
+          options: ['$\\dfrac{1}{4}$','$\\dfrac{1}{2}$','$1$','$2$'], correct: 1 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 1 }
+      ]
+    },
+    { section: '5.3', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{1}{n^{5/2}}$.',
+      parts: [
+        { label: '(a) &nbsp;What is $p$?',
+          options: ['$\\dfrac{2}{5}$','$\\dfrac{5}{2}$','$5$','$\\dfrac{1}{5}$'], correct: 1 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 }
+      ]
+    },
+    { section: '5.3', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{1}{n^{0.99}}$.',
+      parts: [
+        { label: '(a) &nbsp;Does this $p$-series converge or diverge?',
+          options: ['Converges','Diverges'], correct: 1 }
+      ]
+    },
+    { section: '5.3', stem: 'For the $p$-series $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{1}{n^p}$, which condition guarantees convergence?',
+      parts: [
+        { label: '(a) &nbsp;The series converges if and only if:',
+          options: ['$p > 0$','$p > 1$','$p \\geq 1$','$p > 2$'], correct: 1 }
+      ]
+    },
+    { section: '5.3', stem: 'Consider $\\displaystyle\\sum_{n=2}^{\\infty} \\dfrac{1}{n(\\ln n)^2}$.',
+      parts: [
+        { label: '(a) &nbsp;Which test is most appropriate?',
+          options: ['Direct Comparison Test','Integral Test','Ratio Test','Root Test'], correct: 1 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 }
+      ]
+    },
+    // ─── 5.4: Comparison Tests ───
+    { section: '5.4', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{1}{n^2 + 1}$.',
+      parts: [
+        { label: '(a) &nbsp;Which test is most appropriate?',
+          options: ['Ratio Test','Limit Comparison Test','Root Test','Alternating Series Test'], correct: 1 },
+        { label: '(b) &nbsp;What is the best comparison series?',
+          options: ['$\\sum 1/n$','$\\sum 1/n^2$','$\\sum 1/n^3$','$\\sum 1/\\sqrt{n}$'], correct: 1 },
+        { label: '(c) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 }
+      ]
+    },
+    { section: '5.4', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{1}{\\sqrt{n^2+1}}$.',
+      parts: [
+        { label: '(a) &nbsp;What is the best comparison series for the LCT?',
+          options: ['$\\sum 1/n^2$','$\\sum 1/n$','$\\sum 1/\\sqrt{n}$','$\\sum 1/n^3$'], correct: 1 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 1 }
+      ]
+    },
+    { section: '5.4', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{\\cos^2(n)}{n^2}$. Note that $0 \\leq \\cos^2(n) \\leq 1$ for all $n$.',
+      parts: [
+        { label: '(a) &nbsp;Which inequality is true?',
+          options: ['$\\dfrac{\\cos^2(n)}{n^2} \\leq \\dfrac{1}{n}$',
+                    '$\\dfrac{\\cos^2(n)}{n^2} \\leq \\dfrac{1}{n^2}$',
+                    '$\\dfrac{\\cos^2(n)}{n^2} \\geq \\dfrac{1}{n^2}$',
+                    '$\\dfrac{\\cos^2(n)}{n^2} \\leq \\dfrac{1}{n^3}$'], correct: 1 },
+        { label: '(b) &nbsp;Which test applies?',
+          options: ['Direct Comparison Test','Limit Comparison Test','Ratio Test','Integral Test'], correct: 0 },
+        { label: '(c) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 }
+      ]
+    },
+    { section: '5.4', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{2n+1}{n^3+n}$.',
+      parts: [
+        { label: '(a) &nbsp;What is the best comparison series for the LCT?',
+          options: ['$\\sum 1/n$','$\\sum 1/n^2$','$\\sum 1/n^3$','$\\sum 1/n^4$'], correct: 1 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 }
+      ]
+    },
+    { section: '5.4', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{n^2}{n^3+1}$.',
+      parts: [
+        { label: '(a) &nbsp;What is the best comparison series for the LCT?',
+          options: ['$\\sum 1/n$','$\\sum 1/n^2$','$\\sum 1/n^3$','$\\sum 1/\\sqrt{n}$'], correct: 0 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 1 }
+      ]
+    },
+    // ─── 5.5: Alternating Series ───
+    { section: '5.5', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(-1)^n}{n}$.',
+      parts: [
+        { label: '(a) &nbsp;Which test applies?',
+          options: ['Divergence Test','Ratio Test','Alternating Series Test','Integral Test'], correct: 2 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 },
+        { label: '(c) &nbsp;Is it absolutely or conditionally convergent?',
+          options: ['Absolutely convergent','Conditionally convergent'], correct: 1 }
+      ]
+    },
+    { section: '5.5', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(-1)^{n+1}}{n^3}$.',
+      parts: [
+        { label: '(a) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 },
+        { label: '(b) &nbsp;Is it absolutely or conditionally convergent?',
+          options: ['Absolutely convergent','Conditionally convergent'], correct: 0 }
+      ]
+    },
+    { section: '5.5', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(-1)^n \\cdot n}{n+1}$.',
+      parts: [
+        { label: '(a) &nbsp;What is $\\lim_{n \\to \\infty} \\dfrac{n}{n+1}$?',
+          options: ['$0$','$\\dfrac{1}{2}$','$1$','$\\infty$'], correct: 2 },
+        { label: '(b) &nbsp;What does the Divergence Test conclude?',
+          options: ['The series converges','The series diverges','The test is inconclusive'], correct: 1 }
+      ]
+    },
+    { section: '5.5', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(-1)^n}{\\sqrt[3]{n}}$.',
+      parts: [
+        { label: '(a) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges'], correct: 0 },
+        { label: '(b) &nbsp;Is it absolutely or conditionally convergent?',
+          options: ['Absolutely convergent','Conditionally convergent'], correct: 1 }
+      ]
+    },
+    { section: '5.5', stem: 'For $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(-1)^{n+1}}{n^2}$, you approximate the sum using the first 5 terms.',
+      parts: [
+        { label: '(a) &nbsp;The Alternating Series Remainder states $|R_N| \\leq$:',
+          options: ['$a_N$','$a_{N+1}$','$a_{N-1}$','$a_N^2$'], correct: 1 },
+        { label: '(b) &nbsp;What is the error bound $|R_5|$?',
+          options: ['$\\dfrac{1}{25}$','$\\dfrac{1}{36}$','$\\dfrac{1}{16}$','$\\dfrac{1}{49}$'], correct: 1 }
+      ]
+    },
+    // ─── 5.6: Ratio / Root Tests ───
+    { section: '5.6', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{2^n}{n!}$.',
+      parts: [
+        { label: '(a) &nbsp;Which test is best to apply?',
+          options: ['Comparison Test','Integral Test','Ratio Test','Root Test'], correct: 2 },
+        { label: '(b) &nbsp;Compute $L = \\lim_{n \\to \\infty} \\left|\\dfrac{a_{n+1}}{a_n}\\right|$.',
+          options: ['$0$','$\\dfrac{1}{2}$','$1$','$2$'], correct: 0 },
+        { label: '(c) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges','Inconclusive'], correct: 0 }
+      ]
+    },
+    { section: '5.6', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{n!}{3^n}$.',
+      parts: [
+        { label: '(a) &nbsp;Compute $L = \\lim_{n \\to \\infty} \\left|\\dfrac{a_{n+1}}{a_n}\\right|$ using the Ratio Test.',
+          options: ['$0$','$\\dfrac{1}{3}$','$1$','$\\infty$'], correct: 3 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges','Inconclusive'], correct: 1 }
+      ]
+    },
+    { section: '5.6', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\left(\\dfrac{3n}{4n+1}\\right)^n$.',
+      parts: [
+        { label: '(a) &nbsp;Which test is most suitable?',
+          options: ['Ratio Test','Comparison Test','Root Test','Integral Test'], correct: 2 },
+        { label: '(b) &nbsp;Compute $L = \\lim_{n \\to \\infty} \\sqrt[n]{|a_n|}$.',
+          options: ['$0$','$\\dfrac{3}{4}$','$1$','$\\dfrac{4}{3}$'], correct: 1 },
+        { label: '(c) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges','Inconclusive'], correct: 0 }
+      ]
+    },
+    { section: '5.6', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(-3)^n}{n^2}$.',
+      parts: [
+        { label: '(a) &nbsp;Apply the Ratio Test. Compute $L = \\lim_{n \\to \\infty} \\left|\\dfrac{a_{n+1}}{a_n}\\right|$.',
+          options: ['$0$','$\\dfrac{1}{3}$','$1$','$3$'], correct: 3 },
+        { label: '(b) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges','Inconclusive'], correct: 1 }
+      ]
+    },
+    { section: '5.6', stem: 'Consider $\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{n^3}{2^n}$.',
+      parts: [
+        { label: '(a) &nbsp;Which test is best?',
+          options: ['Ratio Test','Comparison Test','Integral Test','Root Test'], correct: 0 },
+        { label: '(b) &nbsp;Compute $L = \\lim_{n \\to \\infty} \\left|\\dfrac{a_{n+1}}{a_n}\\right|$.',
+          options: ['$0$','$\\dfrac{1}{2}$','$1$','$2$'], correct: 1 },
+        { label: '(c) &nbsp;Does it converge or diverge?',
+          options: ['Converges','Diverges','Inconclusive'], correct: 0 }
+      ]
+    }
+  ];
+
+  function shuffleArr(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function generateAndRenderQuiz() {
+    document.getElementById('quiz-score-m5').classList.remove('show');
+    document.getElementById('quiz-submit-btn-m5').disabled = false;
+    const sections = ['5.1','5.2','5.3','5.4','5.5','5.6'];
+    const bySection = {};
+    sections.forEach(s => bySection[s] = []);
+    questionPool.forEach(q => bySection[q.section].push(q));
+    // Guarantee 1 from each section, fill remaining 4 randomly from leftovers
+    const selected = [], leftovers = [];
+    sections.forEach(sec => {
+      const pool = shuffleArr([...bySection[sec]]);
+      selected.push(pool[0]);
+      pool.slice(1).forEach(q => leftovers.push(q));
+    });
+    shuffleArr(leftovers);
+    selected.push(...leftovers.slice(0, 4));
+    shuffleArr(selected);
+    const container = document.getElementById('quiz-questions-container');
+    container.innerHTML = selected.map((q, qi) =>
+      '<div class="quiz-question">' +
+        '<div class="quiz-q-header">Question ' + (qi + 1) + ' \u00b7 Section ' + q.section + '</div>' +
+        '<div class="quiz-q-text">' + q.stem + '</div>' +
+        q.parts.map((p, pi) =>
+          '<div class="quiz-part" data-correct="' + p.correct + '">' +
+            '<div class="quiz-part-label">' + p.label + '</div>' +
+            '<div class="quiz-options">' +
+              p.options.map((opt, oi) =>
+                '<label class="quiz-option">' +
+                  '<input type="radio" name="q' + qi + 'p' + pi + '" value="' + oi + '"> ' +
+                  opt +
+                '</label>'
+              ).join('') +
+            '</div>' +
+          '</div>'
+        ).join('') +
+      '</div>'
+    ).join('');
+    renderMathInElement(container, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$',  right: '$',  display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
+  function submitQuiz() {
+    const questions = document.querySelectorAll('#quiz-questions-container .quiz-question');
+    let totalScore = 0;
+    const totalQuestions = questions.length;
+
+    questions.forEach(question => {
+      const parts = question.querySelectorAll('.quiz-part');
+      const numParts = parts.length;
+      let partsCorrect = 0;
+      parts.forEach(part => {
+        const correctVal = part.dataset.correct;
+        const selected   = part.querySelector('input[type="radio"]:checked');
+        part.querySelectorAll('.quiz-option').forEach(opt => {
+          const radio = opt.querySelector('input[type="radio"]');
+          radio.disabled = true;
+          if (radio.value === correctVal) {
+            if (selected && selected.value === correctVal) { opt.classList.add('correct'); partsCorrect++; }
+            else opt.classList.add('reveal-correct');
+          } else if (selected && radio.value === selected.value) {
+            opt.classList.add('incorrect');
+          }
+        });
+      });
+      totalScore += partsCorrect / numParts; // each question = 1 point regardless of part count
+    });
+
+    // Save to localStorage
+    const history = JSON.parse(localStorage.getItem('calcQuizHistory_m5') || '[]');
+    history.push({ score: totalScore, date: new Date().toISOString() });
+    localStorage.setItem('calcQuizHistory_m5', JSON.stringify(history));
+
+    const displayScore = Number.isInteger(totalScore) ? totalScore : totalScore.toFixed(1);
+    const pct = totalScore / 10;
+    const msg = pct === 1  ? 'Perfect score! Outstanding work!'
+              : pct >= 0.8 ? 'Great job! You know your series well.'
+              : pct >= 0.6 ? 'Good effort — review the sections you missed.'
+              :              "Keep studying, you'll get there!";
+    document.getElementById('quiz-score-num').textContent = displayScore + ' / 10';
+    document.getElementById('quiz-score-msg').textContent = msg;
+    document.getElementById('quiz-submit-btn-m5').disabled = true;
+    const scoreEl = document.getElementById('quiz-score-m5');
+    scoreEl.classList.add('show');
+    scoreEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function retryQuiz() {
+    generateAndRenderQuiz();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderScoreHistory() {
+    const history = JSON.parse(localStorage.getItem('calcQuizHistory_m5') || '[]');
+    const container = document.getElementById('history-content-m5');
+
+    if (history.length === 0) {
+      container.innerHTML =
+        '<div class="history-empty">No quiz attempts yet.<br>Take the quiz to start tracking your scores!</div>' +
+        '<div class="history-clear-wrap"><button class="history-clear-btn" onclick="clearScoreHistory()">Clear History</button></div>';
+      return;
+    }
+
+    // Stats
+    const scores = history.map(h => h.score);
+    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+    const best = Math.max(...scores);
+    const fmt = n => Number.isInteger(n) ? n : n.toFixed(1);
+
+    // Chart dimensions
+    const barW = 32, gap = 10, padL = 40, padB = 36, padT = 16, padR = 16;
+    const chartH = 180;
+    const entries = history.slice(-30); // last 30
+    const svgW = padL + entries.length * (barW + gap) - gap + padR;
+    const svgH = chartH + padT + padB;
+    const yScale = chartH / 10;
+
+    const bars = entries.map((h, i) => {
+      const x = padL + i * (barW + gap);
+      const barH = Math.max(2, h.score * yScale);
+      const y = padT + chartH - barH;
+      const pct = h.score / 10;
+      const color = pct >= 0.8 ? '#818cf8' : pct >= 0.6 ? '#60a5fa' : '#94a3b8';
+      const label = fmt(h.score);
+      const d = new Date(h.date);
+      const dateStr = (d.getMonth()+1) + '/' + d.getDate();
+      return (
+        '<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + barH + '" rx="4" fill="' + color + '" opacity="0.85"/>' +
+        '<text x="' + (x + barW/2) + '" y="' + (y - 5) + '" text-anchor="middle" fill="#e2e8f0" font-size="11" font-family="sans-serif">' + label + '</text>' +
+        '<text x="' + (x + barW/2) + '" y="' + (padT + chartH + 20) + '" text-anchor="middle" fill="#475569" font-size="10" font-family="sans-serif">' + dateStr + '</text>'
+      );
+    }).join('');
+
+    // Y-axis labels
+    const gridRight = padL + entries.length * (barW + gap) - gap + padR;
+    const yLabels = [0, 2, 4, 6, 8, 10].map(v => {
+      const y = padT + chartH - v * yScale;
+      return (
+        '<line x1="' + padL + '" y1="' + y + '" x2="' + gridRight + '" y2="' + y + '" stroke="#1e2433" stroke-width="1"/>' +
+        '<text x="' + (padL - 8) + '" y="' + (y + 4) + '" text-anchor="end" fill="#475569" font-size="10" font-family="sans-serif">' + v + '</text>'
+      );
+    }).join('');
+
+    container.innerHTML =
+      '<div class="history-stats">' +
+        '<div class="stat-box"><div class="stat-value">' + history.length + '</div><div class="stat-label">Attempts</div></div>' +
+        '<div class="stat-box"><div class="stat-value">' + fmt(avg) + '</div><div class="stat-label">Average</div></div>' +
+        '<div class="stat-box"><div class="stat-value">' + fmt(best) + '</div><div class="stat-label">Best</div></div>' +
+      '</div>' +
+      '<div class="chart-wrap">' +
+        '<svg width="' + Math.max(svgW, 300) + '" height="' + svgH + '">' +
+          yLabels + bars +
+        '</svg>' +
+      '</div>' +
+      '<div class="history-clear-wrap"><button class="history-clear-btn" onclick="clearScoreHistory()">Clear History</button></div>';
+  }
+
+  function clearScoreHistory() {
+    if (!confirm('Clear all quiz history? This cannot be undone.')) return;
+    localStorage.removeItem('calcQuizHistory_m5');
+    renderScoreHistory();
+  }
+
+
+</script>
+
+
+<!-- ════════════════════════════════════════
+     MODULE 5 QUIZ
+════════════════════════════════════════ -->
+<div class="view" id="view-quiz-m5">
+  <div class="site-header">
+    <button class="back-btn" onclick="navigate('m5')">← Back</button>
+    <span class="site-logo">Calc II</span>
+    <div class="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('menu')">Modules</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('m5')">Module 5</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">Quiz</span>
+    </div>
+  </div>
+  <div class="content-wrap">
+    <div class="section-hero">
+      <div class="section-num">Module 5</div>
+      <div class="section-title">Quiz</div>
+    </div>
+
+    <p class="quiz-intro">10 questions covering all of Module 5 — Sequences &amp; Series. Each question may have multiple parts. Select your answers, then click <strong>Submit Quiz</strong> to see your score.</p>
+
+    <!-- Score display -->
+    <div class="quiz-score" id="quiz-score-m5">
+      <div class="score-number" id="quiz-score-num">—</div>
+      <div class="score-label">points out of 10</div>
+      <div class="score-message" id="quiz-score-msg"></div>
+      <br>
+      <button class="quiz-retry-btn" onclick="retryQuiz()">Try Again</button>
+    </div>
+
+    <div id="quiz-questions-container"></div>
+
+    <div style="display:none"><!-- static questions — hidden, replaced by dynamic generator -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 1 &nbsp;·&nbsp; Sequences (5.1)</div>
+      <div class="quiz-q-text">Consider the sequence $a_n = \dfrac{5n^2}{2n^2 + 1}$.</div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(a) &nbsp;What is $\lim_{n \to \infty} a_n$?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q1a" value="a"> $0$</label>
+          <label class="quiz-option"><input type="radio" name="q1a" value="b"> $\dfrac{5}{2}$</label>
+          <label class="quiz-option"><input type="radio" name="q1a" value="c"> $5$</label>
+          <label class="quiz-option"><input type="radio" name="q1a" value="d"> $\infty$</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(b) &nbsp;Does the sequence converge or diverge?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q1b" value="a"> Converges</label>
+          <label class="quiz-option"><input type="radio" name="q1b" value="b"> Diverges</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 2 &nbsp;·&nbsp; Divergence Test (5.2)</div>
+      <div class="quiz-q-text">Consider $\displaystyle\sum_{n=1}^{\infty} \dfrac{3n}{n + 5}$.</div>
+      <div class="quiz-part" data-correct="c">
+        <div class="quiz-part-label">(a) &nbsp;Compute $\lim_{n \to \infty} \dfrac{3n}{n+5}$.</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q2a" value="a"> $0$</label>
+          <label class="quiz-option"><input type="radio" name="q2a" value="b"> $\dfrac{3}{5}$</label>
+          <label class="quiz-option"><input type="radio" name="q2a" value="c"> $3$</label>
+          <label class="quiz-option"><input type="radio" name="q2a" value="d"> $\infty$</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(b) &nbsp;What does the Divergence Test tell you?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q2b" value="a"> The series converges</label>
+          <label class="quiz-option"><input type="radio" name="q2b" value="b"> The series diverges</label>
+          <label class="quiz-option"><input type="radio" name="q2b" value="c"> The test is inconclusive</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 3 &nbsp;·&nbsp; Geometric Series (5.2)</div>
+      <div class="quiz-q-text">Consider $\displaystyle\sum_{n=0}^{\infty} \left(\dfrac{2}{5}\right)^n$.</div>
+      <div class="quiz-part" data-correct="c">
+        <div class="quiz-part-label">(a) &nbsp;What is the common ratio $r$?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3a" value="a"> $2$</label>
+          <label class="quiz-option"><input type="radio" name="q3a" value="b"> $5$</label>
+          <label class="quiz-option"><input type="radio" name="q3a" value="c"> $\dfrac{2}{5}$</label>
+          <label class="quiz-option"><input type="radio" name="q3a" value="d"> $\dfrac{5}{2}$</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(b) &nbsp;Does the series converge or diverge?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3b" value="a"> Converges, since $|r| &lt; 1$</label>
+          <label class="quiz-option"><input type="radio" name="q3b" value="b"> Diverges, since $|r| \geq 1$</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(c) &nbsp;What is the sum?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3c" value="a"> $\dfrac{2}{3}$</label>
+          <label class="quiz-option"><input type="radio" name="q3c" value="b"> $\dfrac{5}{3}$</label>
+          <label class="quiz-option"><input type="radio" name="q3c" value="c"> $\dfrac{2}{5}$</label>
+          <label class="quiz-option"><input type="radio" name="q3c" value="d"> $2$</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 4 &nbsp;·&nbsp; P-Series (5.3)</div>
+      <div class="quiz-q-text">Consider $\displaystyle\sum_{n=1}^{\infty} \dfrac{1}{n^3}$.</div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(a) &nbsp;What type of series is this?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q4a" value="a"> Geometric series</label>
+          <label class="quiz-option"><input type="radio" name="q4a" value="b"> $p$-series</label>
+          <label class="quiz-option"><input type="radio" name="q4a" value="c"> Telescoping series</label>
+          <label class="quiz-option"><input type="radio" name="q4a" value="d"> Alternating series</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="c">
+        <div class="quiz-part-label">(b) &nbsp;What is the value of $p$?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q4b" value="a"> $1$</label>
+          <label class="quiz-option"><input type="radio" name="q4b" value="b"> $\dfrac{1}{3}$</label>
+          <label class="quiz-option"><input type="radio" name="q4b" value="c"> $3$</label>
+          <label class="quiz-option"><input type="radio" name="q4b" value="d"> $\dfrac{1}{2}$</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(c) &nbsp;Does it converge or diverge?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q4c" value="a"> Converges, since $p &gt; 1$</label>
+          <label class="quiz-option"><input type="radio" name="q4c" value="b"> Diverges, since $p \leq 1$</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 5 &nbsp;·&nbsp; Limit Comparison Test (5.4)</div>
+      <div class="quiz-q-text">Consider $\displaystyle\sum_{n=1}^{\infty} \dfrac{2n^2 + 1}{n^4 - 3}$.</div>
+      <div class="quiz-part" data-correct="c">
+        <div class="quiz-part-label">(a) &nbsp;Which test is most appropriate?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q5a" value="a"> Ratio Test</label>
+          <label class="quiz-option"><input type="radio" name="q5a" value="b"> Root Test</label>
+          <label class="quiz-option"><input type="radio" name="q5a" value="c"> Limit Comparison Test</label>
+          <label class="quiz-option"><input type="radio" name="q5a" value="d"> Alternating Series Test</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(b) &nbsp;What series $\sum b_n$ should you compare to? (Look at dominant terms.)</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q5b" value="a"> $\displaystyle\sum \dfrac{1}{n}$</label>
+          <label class="quiz-option"><input type="radio" name="q5b" value="b"> $\displaystyle\sum \dfrac{1}{n^2}$</label>
+          <label class="quiz-option"><input type="radio" name="q5b" value="c"> $\displaystyle\sum \dfrac{1}{n^3}$</label>
+          <label class="quiz-option"><input type="radio" name="q5b" value="d"> $\displaystyle\sum \dfrac{1}{n^4}$</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(c) &nbsp;Does it converge or diverge?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q5c" value="a"> Converges</label>
+          <label class="quiz-option"><input type="radio" name="q5c" value="b"> Diverges</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 6 &nbsp;·&nbsp; Direct Comparison Test (5.4)</div>
+      <div class="quiz-q-text">Consider $\displaystyle\sum_{n=1}^{\infty} \dfrac{\cos^2(n)}{n^2}$. Note that $0 \leq \cos^2(n) \leq 1$ for all $n$.</div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(a) &nbsp;Which inequality follows from the bound on $\cos^2(n)$?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q6a" value="a"> $\dfrac{\cos^2(n)}{n^2} \leq \dfrac{1}{n}$</label>
+          <label class="quiz-option"><input type="radio" name="q6a" value="b"> $\dfrac{\cos^2(n)}{n^2} \leq \dfrac{1}{n^2}$</label>
+          <label class="quiz-option"><input type="radio" name="q6a" value="c"> $\dfrac{\cos^2(n)}{n^2} \geq \dfrac{1}{n^2}$</label>
+          <label class="quiz-option"><input type="radio" name="q6a" value="d"> $\dfrac{\cos^2(n)}{n^2} \leq \dfrac{1}{n^3}$</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(b) &nbsp;Since $\sum 1/n^2$ converges, what does the Direct Comparison Test conclude?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q6b" value="a"> $\displaystyle\sum \dfrac{\cos^2(n)}{n^2}$ converges</label>
+          <label class="quiz-option"><input type="radio" name="q6b" value="b"> $\displaystyle\sum \dfrac{\cos^2(n)}{n^2}$ diverges</label>
+          <label class="quiz-option"><input type="radio" name="q6b" value="c"> No conclusion can be drawn</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 7 &nbsp;·&nbsp; Alternating Series Test (5.5)</div>
+      <div class="quiz-q-text">Consider $\displaystyle\sum_{n=1}^{\infty} \dfrac{(-1)^{n+1}}{n^2}$.</div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(a) &nbsp;Which test applies?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q7a" value="a"> Ratio Test</label>
+          <label class="quiz-option"><input type="radio" name="q7a" value="b"> Alternating Series Test</label>
+          <label class="quiz-option"><input type="radio" name="q7a" value="c"> Integral Test</label>
+          <label class="quiz-option"><input type="radio" name="q7a" value="d"> Divergence Test</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(b) &nbsp;Does the series converge or diverge?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q7b" value="a"> Converges</label>
+          <label class="quiz-option"><input type="radio" name="q7b" value="b"> Diverges</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(c) &nbsp;Is the convergence absolute or conditional? (Hint: consider $\sum 1/n^2$.)</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q7c" value="a"> Absolutely convergent</label>
+          <label class="quiz-option"><input type="radio" name="q7c" value="b"> Conditionally convergent</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 8 &nbsp;·&nbsp; Conditional Convergence (5.5)</div>
+      <div class="quiz-q-text">Consider $\displaystyle\sum_{n=1}^{\infty} \dfrac{(-1)^n}{\sqrt{n}}$.</div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(a) &nbsp;Does $\displaystyle\sum_{n=1}^{\infty} \dfrac{1}{\sqrt{n}}$ converge or diverge?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q8a" value="a"> Converges</label>
+          <label class="quiz-option"><input type="radio" name="q8a" value="b"> Diverges ($p = \tfrac{1}{2} \leq 1$)</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(b) &nbsp;Does the alternating series $\displaystyle\sum_{n=1}^{\infty} \dfrac{(-1)^n}{\sqrt{n}}$ converge or diverge?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q8b" value="a"> Converges (by AST: $b_n = 1/\sqrt{n}$ is decreasing $\to 0$)</label>
+          <label class="quiz-option"><input type="radio" name="q8b" value="b"> Diverges</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(c) &nbsp;What type of convergence is this?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q8c" value="a"> Absolute convergence</label>
+          <label class="quiz-option"><input type="radio" name="q8c" value="b"> Conditional convergence</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 9 &nbsp;·&nbsp; Ratio Test (5.6)</div>
+      <div class="quiz-q-text">Consider $\displaystyle\sum_{n=1}^{\infty} \dfrac{n^2}{3^n}$.</div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(a) &nbsp;Which test is best to apply here?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q9a" value="a"> Comparison Test</label>
+          <label class="quiz-option"><input type="radio" name="q9a" value="b"> Ratio Test</label>
+          <label class="quiz-option"><input type="radio" name="q9a" value="c"> Root Test</label>
+          <label class="quiz-option"><input type="radio" name="q9a" value="d"> Integral Test</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(b) &nbsp;Compute $L = \lim_{n \to \infty} \left|\dfrac{a_{n+1}}{a_n}\right|$. What is $L$?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q9b" value="a"> $0$</label>
+          <label class="quiz-option"><input type="radio" name="q9b" value="b"> $\dfrac{1}{3}$</label>
+          <label class="quiz-option"><input type="radio" name="q9b" value="c"> $1$</label>
+          <label class="quiz-option"><input type="radio" name="q9b" value="d"> $3$</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(c) &nbsp;Does it converge or diverge?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q9c" value="a"> Converges ($L &lt; 1$)</label>
+          <label class="quiz-option"><input type="radio" name="q9c" value="b"> Diverges ($L &gt; 1$)</label>
+          <label class="quiz-option"><input type="radio" name="q9c" value="c"> Test inconclusive ($L = 1$)</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="quiz-question">
+      <div class="quiz-q-header">Question 10 &nbsp;·&nbsp; Root Test (5.6)</div>
+      <div class="quiz-q-text">Consider $\displaystyle\sum_{n=1}^{\infty} \left(\dfrac{n}{2n+1}\right)^n$.</div>
+      <div class="quiz-part" data-correct="c">
+        <div class="quiz-part-label">(a) &nbsp;Which test is ideal for this form?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q10a" value="a"> Ratio Test</label>
+          <label class="quiz-option"><input type="radio" name="q10a" value="b"> Integral Test</label>
+          <label class="quiz-option"><input type="radio" name="q10a" value="c"> Root Test</label>
+          <label class="quiz-option"><input type="radio" name="q10a" value="d"> Comparison Test</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="b">
+        <div class="quiz-part-label">(b) &nbsp;Compute $L = \lim_{n \to \infty} \sqrt[n]{|a_n|}$. What is $L$?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q10b" value="a"> $0$</label>
+          <label class="quiz-option"><input type="radio" name="q10b" value="b"> $\dfrac{1}{2}$</label>
+          <label class="quiz-option"><input type="radio" name="q10b" value="c"> $1$</label>
+          <label class="quiz-option"><input type="radio" name="q10b" value="d"> $2$</label>
+        </div>
+      </div>
+      <div class="quiz-part" data-correct="a">
+        <div class="quiz-part-label">(c) &nbsp;Does it converge or diverge?</div>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q10c" value="a"> Converges ($L &lt; 1$)</label>
+          <label class="quiz-option"><input type="radio" name="q10c" value="b"> Diverges ($L &gt; 1$)</label>
+          <label class="quiz-option"><input type="radio" name="q10c" value="c"> Test inconclusive ($L = 1$)</label>
+        </div>
+      </div>
+    </div>
+    </div><!-- end hidden static questions -->
+
+    <div class="quiz-submit-wrap">
+      <button class="quiz-submit-btn" id="quiz-submit-btn-m5" onclick="submitQuiz()">Submit Quiz</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     QUIZ SCORE HISTORY VIEW
+════════════════════════════════════════ -->
+<div class="view" id="view-quiz-history-m5">
+  <div class="site-header">
+    <button class="back-btn" onclick="navigate('m5')">← Back</button>
+    <span class="site-logo">Calc II</span>
+    <div class="breadcrumb">
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('menu')">Modules</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-link" onclick="navigate('m5')">Module 5</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">Score History</span>
+    </div>
+  </div>
+  <div class="content-wrap">
+    <div class="section-hero">
+      <div class="section-num">Module 5</div>
+      <div class="section-title">Score History</div>
+    </div>
+    <div id="history-content-m5"></div>
+  </div>
+</div>
+
+<!-- Service Worker Registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+</script>
+
+</body>
+</html>
